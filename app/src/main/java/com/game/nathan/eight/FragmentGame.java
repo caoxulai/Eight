@@ -1,7 +1,7 @@
 package com.game.nathan.eight;
 
 import android.app.AlertDialog;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,19 +70,19 @@ public class FragmentGame extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        RelativeLayout ll = (RelativeLayout) inflater.inflate(R.layout.fragment_game, container, false);
+        RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.fragment_game, container, false);
 
-        text_steps = (TextView) ll.findViewById(R.id.text_steps);
-        timerValue = (TextView) ll.findViewById(R.id.timerValue);
-        image1 = (ImageView) ll.findViewById(R.id.image1);
-        image2 = (ImageView) ll.findViewById(R.id.image2);
-        image3 = (ImageView) ll.findViewById(R.id.image3);
-        image4 = (ImageView) ll.findViewById(R.id.image4);
-        image5 = (ImageView) ll.findViewById(R.id.image5);
-        image6 = (ImageView) ll.findViewById(R.id.image6);
-        image7 = (ImageView) ll.findViewById(R.id.image7);
-        image8 = (ImageView) ll.findViewById(R.id.image8);
-        resetButton = (ImageView) ll.findViewById(R.id.reset);
+        text_steps = (TextView) rl.findViewById(R.id.text_steps);
+        timerValue = (TextView) rl.findViewById(R.id.timerValue);
+        image1 = (ImageView) rl.findViewById(R.id.image1);
+        image2 = (ImageView) rl.findViewById(R.id.image2);
+        image3 = (ImageView) rl.findViewById(R.id.image3);
+        image4 = (ImageView) rl.findViewById(R.id.image4);
+        image5 = (ImageView) rl.findViewById(R.id.image5);
+        image6 = (ImageView) rl.findViewById(R.id.image6);
+        image7 = (ImageView) rl.findViewById(R.id.image7);
+        image8 = (ImageView) rl.findViewById(R.id.image8);
+        resetButton = (ImageView) rl.findViewById(R.id.reset);
         restart();
 
         startTime = SystemClock.uptimeMillis();
@@ -150,7 +150,7 @@ public class FragmentGame extends Fragment {
             }
         });
 
-        return ll;
+        return rl;
     }
 
 
