@@ -1,5 +1,7 @@
 package com.game.nathan.eight;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,10 +15,34 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        FragmentMenu fmenu = new FragmentMenu();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.framelayout, fmenu);
+        transaction.commit();
+
+//        FragmentManager fragmentManager = getFragmentManager();
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        transaction.add(R.id.fragment, new FragmentMenu(), "menu");
+//        // transaction.addToBackStack(null);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+
+
     }
 
 
+    @Override
+    public void onBackPressed() {
 
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 
     @Override

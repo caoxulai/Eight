@@ -30,14 +30,19 @@ public class FragmentMenu extends Fragment {
 
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.fragment, new FragmentGame(), "game");
-                // transaction.addToBackStack(null);
-                transaction.commitAllowingStateLoss();
-
+                transaction.replace(R.id.framelayout, new FragmentGame(), "game");
                 transaction.addToBackStack(null);
-
                 transaction.commit();
 
+
+
+//
+//                Fragment details = (Fragment)getFragmentManager().findFragmentById(R.id.fragment);
+//                details = new FragmentGame();
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.replace(R.id.fragment, details);
+//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//                ft.commit();
 
             }
         });
