@@ -90,57 +90,73 @@ public class FragmentGame extends Fragment {
 
         image1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                changePosition(image1, vacancy);
-                stepAndUpdate(1);
+                if (changable(position[0], vacancy)) {
+                    changePosition(image1, vacancy);
+                    stepAndUpdate(1);
+                }
             }
         });
 
         image2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                changePosition(image2, vacancy);
-                stepAndUpdate(2);
+                if (changable(position[1], vacancy)) {
+                    changePosition(image2, vacancy);
+                    stepAndUpdate(2);
+                }
             }
         });
 
         image3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                changePosition(image3, vacancy);
-                stepAndUpdate(3);
+                if (changable(position[2], vacancy)) {
+                    changePosition(image3, vacancy);
+                    stepAndUpdate(3);
+                }
             }
         });
 
         image4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                changePosition(image4, vacancy);
-                stepAndUpdate(4);
+                if (changable(position[3], vacancy)) {
+                    changePosition(image4, vacancy);
+                    stepAndUpdate(4);
+                }
             }
         });
 
         image5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                changePosition(image5, vacancy);
-                stepAndUpdate(5);
+                if (changable(position[4], vacancy)) {
+                    changePosition(image5, vacancy);
+                    stepAndUpdate(5);
+                }
             }
         });
 
         image6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                changePosition(image6, vacancy);
-                stepAndUpdate(6);
+                if (changable(position[5], vacancy)) {
+                    changePosition(image6, vacancy);
+                    stepAndUpdate(6);
+                }
             }
         });
 
         image7.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                changePosition(image7, vacancy);
-                stepAndUpdate(7);
+                if (changable(position[6], vacancy)) {
+                    changePosition(image7, vacancy);
+                    stepAndUpdate(7);
+                }
             }
         });
 
         image8.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                changePosition(image8, vacancy);
-                stepAndUpdate(8);
+                if (changable(position[7], vacancy)) {
+                    changePosition(image8, vacancy);
+                    stepAndUpdate(8);
+                }
             }
         });
 
@@ -151,6 +167,23 @@ public class FragmentGame extends Fragment {
         });
 
         return rl;
+    }
+
+
+    private boolean changable(int origin, int target) {
+        if (origin % 3 == 1) {
+            if ((target == origin + 1) || (target == origin - 3) || (target == origin + 3))
+                return true;
+        } else if (origin % 3 == 2) {
+            if ((target == origin + 1) || (target == origin - 1) || (target == origin - 3) || (target == origin + 3))
+                return true;
+        } else if (origin % 3 == 0) {
+            if ((target == origin - 1) || (target == origin - 3) || (target == origin + 3))
+                return true;
+        }
+
+        return false;
+
     }
 
 
@@ -241,6 +274,10 @@ public class FragmentGame extends Fragment {
         }
         // generate random positions
         Collections.shuffle(dataList);
+        while (inversions(dataList) % 2 == 1) {
+            Collections.shuffle(dataList);
+        }
+
         for (int i = 0; i < dataList.size(); i++) {
             position[i] = dataList.get(i);
         }
@@ -269,5 +306,16 @@ public class FragmentGame extends Fragment {
 
     }
 
+    private int inversions(List<Integer> dataList) {
+        int inv = 0;
+        for (int i = 0; i < dataList.size() - 1; i++) {
+            for (int j = i + 1; j < dataList.size(); j++) {
+                if (dataList.get(i) > dataList.get(j)) {
+                    inv++;
+                }
+            }
+        }
+        return inv;
+    }
 
 }
