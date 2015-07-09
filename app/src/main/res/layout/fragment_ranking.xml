@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/ranking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:text="Ranking"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp" />
+
+    <ImageView
+        android:id="@+id/reset"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignEnd="@+id/time1"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/time1"
+        android:layout_marginTop="76dp"
+        android:src="@drawable/restart" />
+
+    <TextView
+        android:id="@+id/name1"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="175dp"
+
+        android:gravity="center_horizontal"
+        android:text="KK"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/step1"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name1"
+        android:layout_marginLeft="28dp"
+        android:layout_toRightOf="@+id/name1"
+        android:gravity="center_horizontal"
+        android:text="88"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/time1"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name1"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/step1"
+        android:gravity="center_horizontal"
+        android:text="0:00.00"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <TextView
+        android:id="@+id/name2"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/name1"
+        android:layout_alignTop="@+id/name1"
+        android:layout_marginTop="45dp"
+        android:gravity="center_horizontal"
+        android:text="KK"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/step2"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name2"
+        android:layout_marginLeft="28dp"
+        android:layout_toRightOf="@+id/name2"
+        android:gravity="center_horizontal"
+        android:text="88"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/time2"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name2"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/step2"
+        android:gravity="center_horizontal"
+        android:text="0:00.00"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/name3"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/name1"
+        android:layout_alignTop="@+id/name2"
+        android:layout_marginTop="45dp"
+        android:gravity="center_horizontal"
+        android:text="KK"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/step3"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name3"
+        android:layout_marginLeft="28dp"
+        android:layout_toRightOf="@+id/name3"
+        android:gravity="center_horizontal"
+        android:text="88"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/time3"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name3"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/step3"
+        android:gravity="center_horizontal"
+        android:text="0:00.00"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/name4"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/name1"
+        android:layout_alignTop="@+id/name3"
+        android:layout_marginTop="45dp"
+        android:gravity="center_horizontal"
+        android:text="KK"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/step4"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name4"
+        android:layout_marginLeft="28dp"
+        android:layout_toRightOf="@+id/name4"
+        android:gravity="center_horizontal"
+        android:text="88"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/time4"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name4"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/step4"
+        android:gravity="center_horizontal"
+        android:text="0:00.00"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/name5"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/name1"
+        android:layout_alignTop="@+id/name4"
+        android:layout_marginTop="45dp"
+        android:gravity="center_horizontal"
+        android:text="KK"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/step5"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name5"
+        android:layout_marginLeft="28dp"
+        android:layout_toRightOf="@+id/name5"
+        android:gravity="center_horizontal"
+        android:text="88"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/time5"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name5"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/step5"
+        android:gravity="center_horizontal"
+        android:text="0:00.00"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+</RelativeLayout>

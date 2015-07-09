@@ -22,6 +22,9 @@ public class MainActivity extends ActionBarActivity {
         transaction.add(R.id.framelayout, fmenu);
         transaction.commit();
 
+
+
+
 //        FragmentManager fragmentManager = getFragmentManager();
 //        FragmentTransaction transaction = fragmentManager.beginTransaction();
 //        transaction.add(R.id.fragment, new FragmentMenu(), "menu");

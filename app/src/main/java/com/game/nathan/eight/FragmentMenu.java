@@ -17,6 +17,7 @@ import android.widget.TextView;
 public class FragmentMenu extends Fragment {
 
     private static TextView start;
+    private static TextView ranking;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class FragmentMenu extends Fragment {
         RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.fragment_menu, container, false);
 
         start = (TextView) rl.findViewById(R.id.start);
+        ranking = (TextView) rl.findViewById(R.id.ranking);
 
         start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -35,7 +37,6 @@ public class FragmentMenu extends Fragment {
                 transaction.commit();
 
 
-
 //
 //                Fragment details = (Fragment)getFragmentManager().findFragmentById(R.id.fragment);
 //                details = new FragmentGame();
@@ -44,6 +45,17 @@ public class FragmentMenu extends Fragment {
 //                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 //                ft.commit();
 
+            }
+        });
+
+        ranking.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                // The third input is alias of this new fragment
+                transaction.replace(R.id.framelayout, new FragmentRanking(), "ranking");
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
