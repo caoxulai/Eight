@@ -31,7 +31,13 @@ import android.widget.TextView;
  */
 public class FragmentGame extends Fragment {
 
+
+    private int rank = 0;
     private int steps = 0;
+    private String steps_str = "";
+    private String time = "";
+    private long miliseconds = 999999;
+
     private int vacancy = 9;
     private int position[] = {5, 8, 7, 3, 1, 4, 6, 2};
 
@@ -252,7 +258,7 @@ public class FragmentGame extends Fragment {
 
 
             // Rank Check
-            int rank = 6;
+            rank = 6;
             String stag = "step" + Integer.toString(rank - 1);
             String mstag = "ms" + Integer.toString(rank - 1);
             String s = sharedpreferences.getString(stag, null);
@@ -270,15 +276,12 @@ public class FragmentGame extends Fragment {
             }
 
 
-
             // Write record in SharedPreferences
             if (rank < 6) {
-                final Intent intent = new Intent(getActivity(), SavingIntentService.class);
-                intent.putExtra("rank", rank);
 
-                intent.putExtra("steps",  Integer.toString(steps));
-                intent.putExtra("time", Integer.toString(mins) + ":" + String.format("%02d", secs) + "." + String.format("%02d", milliseconds));
-                intent.putExtra("ms", timeInMilliseconds);
+                steps_str = Integer.toString(steps);
+                time = Integer.toString(mins) + ":" + String.format("%02d", secs) + "." + String.format("%02d", milliseconds);
+                miliseconds = timeInMilliseconds;
 
                 ////////Pop out an alert dialog///////
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -296,10 +299,7 @@ public class FragmentGame extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Code for the button of alertdialog
                                 String name = userInput.getText().toString();
-                                intent.putExtra("name",name);
-
-                                Context ctx = (Context) FragmentGame.this.getActivity();
-                                ctx.startService(intent);
+                                saving(name);
                             }
                         }).create();
                 AlertDialog alertDialog = builder.create();
@@ -331,6 +331,63 @@ public class FragmentGame extends Fragment {
             }
         }
     }
+
+    private void saving(String name) {
+
+
+
+
+//            Context ctx = getApplicationContext();
+//            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+
+        sharedpreferences = this.getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString("name", name);
+        editor.commit();
+
+        for (int k = 4; k >= rank; k--) {
+            overwrite(k);
+        }
+
+        String ntag = "name" + Integer.toString(rank);
+        String stag = "step" + Integer.toString(rank);
+        String ttag = "time" + Integer.toString(rank);
+        String mstag = "ms" + Integer.toString(rank);
+
+        editor.putString(ntag, name);
+        editor.putString(stag, steps_str);
+        editor.putString(ttag, time);
+        editor.putLong(mstag, miliseconds);
+        editor.apply();
+
+
+    }
+
+    private void overwrite(int rank) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+        String ntag = "name" + Integer.toString(rank);
+        String stag = "step" + Integer.toString(rank);
+        String ttag = "time" + Integer.toString(rank);
+        String mstag = "ms" + Integer.toString(rank);
+        String n = sharedpreferences.getString(ntag, null);
+        String s = sharedpreferences.getString(stag, null);
+        String t = sharedpreferences.getString(ttag, null);
+        long ms = sharedpreferences.getLong(mstag, 9999);
+
+
+        ntag = "name" + Integer.toString(rank + 1);
+        stag = "step" + Integer.toString(rank + 1);
+        ttag = "time" + Integer.toString(rank + 1);
+        mstag = "ms" + Integer.toString(rank + 1);
+
+        editor.putString(ntag, n);
+        editor.putString(stag, s);
+        editor.putString(ttag, t);
+        editor.putLong(mstag, ms);
+        editor.apply();
+    }
+
 
     private void restart() {
         steps = 0;
