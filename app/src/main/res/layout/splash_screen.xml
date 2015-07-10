@@ -27,6 +27,16 @@
         android:gravity="center_horizontal"
         android:text="Made By Xulai C\nXulai.Cao@gmail.com"
         android:textColor="#454545"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:id="@+id/textView" />
+    <TextView
+        android:id="@+id/Message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="唯爱与友谊    不可辜负"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp" />
 
 </RelativeLayout>

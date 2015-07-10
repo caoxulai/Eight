@@ -11,38 +11,17 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:gravity="center_horizontal"
-        android:text="New Record!"
+        android:layout_marginTop="20dp"
+        android:text="Bravo!"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/ranklabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_marginLeft="65dp"
-        android:layout_marginTop="35dp"
-        android:text="Rank:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/rank"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ranklabel"
-        android:layout_marginLeft="175dp"
-        android:gravity="center"
-        android:text="1"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/stepslabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ranklabel"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="65dp"
-        android:layout_marginTop="10dp"
         android:text="Steps:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -70,42 +49,14 @@
         android:id="@+id/time"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/steps"
-
-        android:layout_alignStart="@+id/steps"
         android:layout_alignTop="@+id/timelabel"
+
+        android:layout_alignLeft="@+id/steps"
+        android:layout_alignStart="@+id/steps"
 
         android:gravity="center"
         android:text="1:02.20"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/namelabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/timelabel"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:text="You Name:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/namelabel"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="3dp"
-        android:gravity="center_horizontal|bottom"
-        android:maxLines="1"
-        android:maxWidth="70dp"
-        android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium">
-
-        <requestFocus />
-
-    </EditText>
 
 
 </RelativeLayout>

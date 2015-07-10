@@ -1,7 +1,9 @@
 package com.game.nathan.eight;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by nathan on 7/9/2015.
@@ -22,25 +25,6 @@ public class FragmentRanking extends Fragment {
     private static TextView[] time = new TextView[5];
 
     private static ImageView resetButton;
-//    private static TextView name1;
-//    private static TextView step1;
-//    private static TextView time1;
-//
-//    private static TextView name2;
-//    private static TextView step2;
-//    private static TextView time2;
-//
-//    private static TextView name3;
-//    private static TextView step3;
-//    private static TextView time3;
-//
-//    private static TextView name4;
-//    private static TextView step4;
-//    private static TextView time4;
-//
-//    private static TextView name5;
-//    private static TextView step5;
-//    private static TextView time5;
 
     // Declare SharedPreferences
     public static final String MyPREFERENCES = "rankings";
@@ -76,34 +60,6 @@ public class FragmentRanking extends Fragment {
 
         resetButton = (ImageView) rl.findViewById(R.id.reset);
 
-//        name1 = (TextView) rl.findViewById(R.id.name1);
-//        step1 = (TextView) rl.findViewById(R.id.step1);
-//        time1 = (TextView) rl.findViewById(R.id.time1);
-//
-//        name2 = (TextView) rl.findViewById(R.id.name2);
-//        step2 = (TextView) rl.findViewById(R.id.step2);
-//        time2 = (TextView) rl.findViewById(R.id.time2);
-//
-//        name3 = (TextView) rl.findViewById(R.id.name3);
-//        step3 = (TextView) rl.findViewById(R.id.step3);
-//        time3 = (TextView) rl.findViewById(R.id.time3);
-//
-//        name4 = (TextView) rl.findViewById(R.id.name4);
-//        step4 = (TextView) rl.findViewById(R.id.step4);
-//        time4 = (TextView) rl.findViewById(R.id.time4);
-//
-//        name5 = (TextView) rl.findViewById(R.id.name5);
-//        step5 = (TextView) rl.findViewById(R.id.step5);
-//        time5 = (TextView) rl.findViewById(R.id.time5);
-
-
-//        String n1 = sharedpreferences.getString("name1", "");
-//        String s1 = sharedpreferences.getString("step1", "");
-//        String t1 = sharedpreferences.getString("time1", "");
-//        name1.setText(n1);
-//        step1.setText(s1);
-//        time1.setText(t1);
-
         for (int i = 1; i <= 5; i++) {
             initiate(i);
         }
@@ -111,16 +67,46 @@ public class FragmentRanking extends Fragment {
         resetButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear().commit();
+                ////////Pop out an alert dialog///////
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                for (int i = 1; i <= 5; i++) {
-                    initiate(i);
-                }
+                LayoutInflater li = LayoutInflater.from(getActivity());
+                View alert_reset_ranking = li.inflate(R.layout.alert_reset_ranking, null);
+                builder.setView(alert_reset_ranking);
+
+                builder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Code for the button of alertdialog
+                                resetRanking();
+                            }
+                        }).create();
+                builder.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Code for the button of alertdialog
+
+                            }
+                        }).create();
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
             }
         });
 
         return rl;
+    }
+
+    private void resetRanking() {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.clear().commit();
+
+        for (int i = 1; i <= 5; i++) {
+            initiate(i);
+        }
+
+        Toast.makeText(getActivity().getApplicationContext(), "Ranking Reset", Toast.LENGTH_SHORT).show();
+
     }
 
     private void initiate(int i) {

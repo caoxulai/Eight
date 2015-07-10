@@ -24,20 +24,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import android.os.Vibrator;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class FragmentGame extends Fragment {
 
-
+    // For saving method cuz alert dialog cannot pass value out
     private int rank = 0;
     private int steps = 0;
     private String steps_str = "";
     private String time = "";
     private long miliseconds = 999999;
 
+    // position info
     private int vacancy = 9;
     private int position[] = {5, 8, 7, 3, 1, 4, 6, 2};
 
@@ -65,6 +68,7 @@ public class FragmentGame extends Fragment {
     SharedPreferences sharedpreferences;
 
 
+    // A Runnable instance to be timer
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
@@ -200,7 +204,7 @@ public class FragmentGame extends Fragment {
                 return true;
         }
 
-        return true;
+        return false;
 
     }
 
@@ -248,6 +252,10 @@ public class FragmentGame extends Fragment {
             image7.setClickable(false);
             image8.setClickable(false);
 
+            Vibrator v = (Vibrator) getActivity().getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+            // Vibrate for 500 milliseconds
+            v.vibrate(500);
+
 
             customHandler.removeCallbacks(updateTimerThread);
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
@@ -265,8 +273,6 @@ public class FragmentGame extends Fragment {
             long ms = sharedpreferences.getLong(mstag, 9999999);
             while (s == null || steps < Integer.parseInt(s) || (steps == Integer.parseInt(s) && timeInMilliseconds < ms)) {
                 rank--;
-//                if (rank < 5)
-//                    overwrite(rank);
                 if (rank == 1)
                     break;
                 stag = "step" + Integer.toString(rank - 1);
@@ -276,12 +282,13 @@ public class FragmentGame extends Fragment {
             }
 
 
-            // Write record in SharedPreferences
-            if (rank < 6) {
+            // Current record
+            steps_str = Integer.toString(steps);
+            time = Integer.toString(mins) + ":" + String.format("%02d", secs) + "." + String.format("%02d", milliseconds);
+            miliseconds = timeInMilliseconds;
 
-                steps_str = Integer.toString(steps);
-                time = Integer.toString(mins) + ":" + String.format("%02d", secs) + "." + String.format("%02d", milliseconds);
-                miliseconds = timeInMilliseconds;
+            // A new record
+            if (rank < 6) {
 
                 ////////Pop out an alert dialog///////
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -290,34 +297,46 @@ public class FragmentGame extends Fragment {
                 View alert_top5 = li.inflate(R.layout.alert_top5, null);
                 builder.setView(alert_top5);
 
-                final EditText userInput = (EditText) alert_top5.findViewById(R.id.editTextDialogUserInput);
-                String name = sharedpreferences.getString("name", "");
-                userInput.setText(name);
+                final TextView rank_value = (TextView) alert_top5.findViewById(R.id.rank);
+                final TextView steps_value = (TextView) alert_top5.findViewById(R.id.steps);
+                final TextView time_value = (TextView) alert_top5.findViewById(R.id.time);
+                rank_value.setText(Integer.toString(rank));
+                steps_value.setText(steps_str);
+                time_value.setText(time);
 
-                builder.setCancelable(false).setPositiveButton("OK",
+
+                final EditText name_value = (EditText) alert_top5.findViewById(R.id.name);
+                String name = sharedpreferences.getString("name", "");
+                name_value.setText(name);
+
+                builder.setCancelable(false).setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Code for the button of alertdialog
-                                String name = userInput.getText().toString();
+
+                                String name = name_value.getText().toString();
+                                // trim beginning and tailing whitespaces
+                                name = name.trim();
+                                // trim duplicated whitespaces
+                                name = name.replaceAll("\\s+", " ");
+                                // Write record in SharedPreferences
                                 saving(name);
                             }
                         }).create();
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
-
             } else {
                 ////////Pop out an alert dialog///////
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Aha! You made it!\n\nYour steps: "
-                        + steps
-                        + "\nYour time: "
-                        + mins
-                        + ":"
-                        + String.format("%02d", secs)
-                        + "."
-                        + String.format("%02d", milliseconds)
-                        + "\n\nThanks for playing.\n                               -- Xulai");
+                LayoutInflater li = LayoutInflater.from(getActivity());
+                View alert_finish = li.inflate(R.layout.alert_finish, null);
+                builder.setView(alert_finish);
+
+                final TextView steps_value = (TextView) alert_finish.findViewById(R.id.steps);
+                final TextView time_value = (TextView) alert_finish.findViewById(R.id.time);
+                steps_value.setText(steps_str);
+                time_value.setText(time);
 
                 builder.setPositiveButton("New Game",
                         new DialogInterface.OnClickListener() {
@@ -333,8 +352,6 @@ public class FragmentGame extends Fragment {
     }
 
     private void saving(String name) {
-
-
 
 
 //            Context ctx = getApplicationContext();
@@ -430,6 +447,7 @@ public class FragmentGame extends Fragment {
         // start timer
         startTime = SystemClock.uptimeMillis();
         customHandler.postDelayed(updateTimerThread, 0);
+        Toast.makeText(getActivity().getApplicationContext(), "New Game", Toast.LENGTH_SHORT).show();
 
     }
 
