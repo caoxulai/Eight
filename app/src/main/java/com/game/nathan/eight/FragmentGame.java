@@ -3,6 +3,7 @@ package com.game.nathan.eight;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -258,8 +259,8 @@ public class FragmentGame extends Fragment {
             long ms = sharedpreferences.getLong(mstag, 9999999);
             while (s == null || steps < Integer.parseInt(s) || (steps == Integer.parseInt(s) && timeInMilliseconds < ms)) {
                 rank--;
-                if (rank < 5)
-                    overwrite(rank);
+//                if (rank < 5)
+//                    overwrite(rank);
                 if (rank == 1)
                     break;
                 stag = "step" + Integer.toString(rank - 1);
@@ -269,8 +270,15 @@ public class FragmentGame extends Fragment {
             }
 
 
+
             // Write record in SharedPreferences
             if (rank < 6) {
+                final Intent intent = new Intent(getActivity(), SavingIntentService.class);
+                intent.putExtra("rank", rank);
+
+                intent.putExtra("steps",  Integer.toString(steps));
+                intent.putExtra("time", Integer.toString(mins) + ":" + String.format("%02d", secs) + "." + String.format("%02d", milliseconds));
+                intent.putExtra("ms", timeInMilliseconds);
 
                 ////////Pop out an alert dialog///////
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -288,30 +296,15 @@ public class FragmentGame extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Code for the button of alertdialog
                                 String name = userInput.getText().toString();
-                                SharedPreferences sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString("name", name);
-                                editor.commit();
+                                intent.putExtra("name",name);
+
+                                Context ctx = (Context) FragmentGame.this.getActivity();
+                                ctx.startService(intent);
                             }
                         }).create();
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
-
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-
-                name = sharedpreferences.getString("name", "$$$$");
-
-                String ntag = "name" + Integer.toString(rank);
-                stag = "step" + Integer.toString(rank);
-                String ttag = "time" + Integer.toString(rank);
-                mstag = "ms" + Integer.toString(rank);
-
-                editor.putString(ntag, name);
-                editor.putString(stag, Integer.toString(steps));
-                editor.putString(ttag, Integer.toString(mins) + ":" + String.format("%02d", secs) + "." + String.format("%02d", milliseconds));
-                editor.putLong(mstag, timeInMilliseconds);
-                editor.apply();
 
             } else {
                 ////////Pop out an alert dialog///////
@@ -381,31 +374,6 @@ public class FragmentGame extends Fragment {
         startTime = SystemClock.uptimeMillis();
         customHandler.postDelayed(updateTimerThread, 0);
 
-    }
-
-    private void overwrite(int rank) {
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-        String ntag = "name" + Integer.toString(rank);
-        String stag = "step" + Integer.toString(rank);
-        String ttag = "time" + Integer.toString(rank);
-        String mstag = "ms" + Integer.toString(rank);
-        String n = sharedpreferences.getString(ntag, null);
-        String s = sharedpreferences.getString(stag, null);
-        String t = sharedpreferences.getString(ttag, null);
-        long ms = sharedpreferences.getLong(mstag, 9999);
-
-
-        ntag = "name" + Integer.toString(rank + 1);
-        stag = "step" + Integer.toString(rank + 1);
-        ttag = "time" + Integer.toString(rank + 1);
-        mstag = "ms" + Integer.toString(rank + 1);
-
-        editor.putString(ntag, n);
-        editor.putString(stag, s);
-        editor.putString(ttag, t);
-        editor.putLong(mstag, ms);
-        editor.apply();
     }
 
     private int inversions(List<Integer> dataList) {
