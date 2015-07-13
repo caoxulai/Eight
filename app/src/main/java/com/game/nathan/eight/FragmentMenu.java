@@ -1,5 +1,6 @@
 package com.game.nathan.eight;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -21,6 +22,7 @@ public class FragmentMenu extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.fragment_menu, container, false);
 

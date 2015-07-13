@@ -2,9 +2,12 @@ package com.game.nathan.eight;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +35,8 @@ import android.os.Vibrator;
  * A placeholder fragment containing a simple view.
  */
 public class FragmentGame extends Fragment {
+
+    private MediaPlayer succees_sound;
 
     // For saving method cuz alert dialog cannot pass value out
     private int rank = 0;
@@ -89,6 +94,7 @@ public class FragmentGame extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         sharedpreferences = this.getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -242,6 +248,10 @@ public class FragmentGame extends Fragment {
 
         int[] target = {1, 2, 3, 4, 5, 6, 7, 8};
         if (Arrays.equals(position, target)) {
+            succees_sound = MediaPlayer.create(getActivity(), R.raw.success);
+            succees_sound.start();
+
+
             //successfully sort them in the right order
             image1.setClickable(false);
             image2.setClickable(false);
@@ -321,6 +331,20 @@ public class FragmentGame extends Fragment {
                                 name = name.replaceAll("\\s+", " ");
                                 // Write record in SharedPreferences
                                 saving(name);
+
+                                FragmentManager fragmentManager = getFragmentManager();
+                                // Go to Menu fragment, but it will be instantly replaced by Ranking fragment, so it won't show up. and then it will go back to Menu when you finished in ranking
+                                fragmentManager.popBackStack();
+                                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                                // The third input is alias of this new fragment
+                                FragmentRanking f_ranking = new FragmentRanking();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("rank", rank);
+                                f_ranking.setArguments(bundle);
+
+                                transaction.replace(R.id.framelayout, f_ranking, "ranking");
+                                transaction.addToBackStack(null);
+                                transaction.commit();
                             }
                         }).create();
                 AlertDialog alertDialog = builder.create();

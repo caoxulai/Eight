@@ -1,40 +1,71 @@
 package com.game.nathan.eight;
 
+import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
 
 
+    public static MediaPlayer bgm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+
+
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
+//        getActionBar().hide();
+
+
+
+        bgm = MediaPlayer.create(this, R.raw.bgm_main);
+        bgm.setLooping(true);
+
+        bgm.start();
 
         FragmentMenu fmenu = new FragmentMenu();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.framelayout, fmenu);
+        transaction.add(R.id.framelayout, fmenu, "menu");
         transaction.commit();
-
-
-
-
-//        FragmentManager fragmentManager = getFragmentManager();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.add(R.id.fragment, new FragmentMenu(), "menu");
-//        // transaction.addToBackStack(null);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
 
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bgm.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bgm.start();
+    }
 
     @Override
     public void onBackPressed() {

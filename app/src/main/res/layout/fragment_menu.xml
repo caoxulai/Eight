@@ -9,10 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="210dp"
+        android:layout_marginBottom="230dp"
         android:text="Start Game"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="30dp" />
+        android:textSize="28dp" />
 
     <TextView
         android:id="@+id/ranking"
@@ -20,8 +20,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="175dp"
         android:text="Ranking"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="30dp" />
+        android:textSize="28dp" />
+
+    <TextView
+        android:id="@+id/tutorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="120dp"
+        android:text="How To Play"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="28dp" />
 </RelativeLayout>

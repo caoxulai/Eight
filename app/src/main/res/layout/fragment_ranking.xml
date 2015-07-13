@@ -32,7 +32,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="38dp"
-        android:layout_marginTop="175dp"
+        android:layout_marginTop="170dp"
 
         android:gravity="center_horizontal"
         android:text="KK"
@@ -192,6 +192,19 @@
         android:gravity="center_horizontal"
         android:text="0:00.00"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="New Game"
+        android:id="@+id/new_game"
+        android:layout_marginTop="61dp"
+        android:textColor="@color/material_blue_grey_800"
+        android:textSize="18dp"
+        android:layout_below="@+id/time5"
+        android:layout_alignLeft="@+id/time5"
+        android:layout_alignStart="@+id/time5" />
 
 
 </RelativeLayout>

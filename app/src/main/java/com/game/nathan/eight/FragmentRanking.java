@@ -2,9 +2,12 @@ package com.game.nathan.eight;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -23,6 +26,7 @@ public class FragmentRanking extends Fragment {
     private static TextView[] name = new TextView[5];
     private static TextView[] step = new TextView[5];
     private static TextView[] time = new TextView[5];
+    private static TextView new_game;
 
     private static ImageView resetButton;
 
@@ -58,10 +62,23 @@ public class FragmentRanking extends Fragment {
         step[4] = (TextView) rl.findViewById(R.id.step5);
         time[4] = (TextView) rl.findViewById(R.id.time5);
 
+        new_game = (TextView) rl.findViewById(R.id.new_game);
+
+
         resetButton = (ImageView) rl.findViewById(R.id.reset);
 
         for (int i = 1; i <= 5; i++) {
             initiate(i);
+        }
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            int rank = bundle.getInt("rank", 0);
+            if (rank > 0) {
+                name[rank - 1].setTypeface(null, Typeface.BOLD_ITALIC);
+                step[rank - 1].setTypeface(null, Typeface.BOLD_ITALIC);
+                time[rank - 1].setTypeface(null, Typeface.BOLD_ITALIC);
+            }
         }
 
         resetButton.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +108,19 @@ public class FragmentRanking extends Fragment {
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
+            }
+        });
+
+        new_game.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                // Go to Menu fragment, but it will be instantly replaced by Ranking fragment, so it won't show up. and then it will go back to Menu when you finished in ranking
+                fragmentManager.popBackStack();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                // The third input is alias of this new fragment
+                transaction.replace(R.id.framelayout, new FragmentGame(), "game");
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 

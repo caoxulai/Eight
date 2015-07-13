@@ -13,7 +13,8 @@
         android:text="You will lose all the records.\nAre you sure?"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        />
 
 
 
