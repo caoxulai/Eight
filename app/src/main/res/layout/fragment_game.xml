@@ -89,8 +89,8 @@
         android:id="@+id/reset"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_alignBottom="@+id/text_steps"
-        android:layout_alignLeft="@+id/text_steps"
+        android:layout_alignBottom="@+id/textSteps"
+        android:layout_alignLeft="@+id/textSteps"
         android:layout_marginLeft="140dp"
         android:src="@drawable/restart" />
 
@@ -98,14 +98,14 @@
         android:id="@+id/timerValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_steps"
+        android:layout_below="@+id/textSteps"
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/timerVal"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/text_steps"
+        android:id="@+id/textSteps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
