@@ -34,7 +34,7 @@ public class FragmentMenu extends Fragment {
 
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.framelayout, new FragmentGame(), "game");
+                transaction.replace(R.id.framelayout, new FragmentGame_v2(), "game");
                 transaction.addToBackStack(null);
                 transaction.commit();
 
