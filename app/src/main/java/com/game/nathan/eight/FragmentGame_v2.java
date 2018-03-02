@@ -37,14 +37,12 @@ public class FragmentGame_v2 extends Fragment {
     // For saving method cuz alert dialog cannot pass value out
     private int rank = 0;
     private int steps = 0;
-    private String steps_str = "";
+    private String stepsStr = "";
     private String time = "";
     private long milliseconds = 999999;
 
     // order info
-    private int vacancy = 8;
-    private int order[] = {5, 0, 7, 3, 1, 4, 6, 2};
-
+    private int order[] = {5, 0, 7, 3, 1, 4, 6, 2, 8};
 
     private ImageView[] imageView;
     private int[] images = {R.drawable.one, R.drawable.two, R.drawable.three,
@@ -116,20 +114,37 @@ public class FragmentGame_v2 extends Fragment {
         imageView[7] = (ImageView) rl.findViewById(R.id.image8);
         imageView[8] = (ImageView) rl.findViewById(R.id.vacancy);
 
-        image1 = (ImageView) rl.findViewById(R.id.image1);
-        image2 = (ImageView) rl.findViewById(R.id.image2);
-        image3 = (ImageView) rl.findViewById(R.id.image3);
-        image4 = (ImageView) rl.findViewById(R.id.image4);
-        image5 = (ImageView) rl.findViewById(R.id.image5);
-        image6 = (ImageView) rl.findViewById(R.id.image6);
-        image7 = (ImageView) rl.findViewById(R.id.image7);
-        image8 = (ImageView) rl.findViewById(R.id.image8);
+//        image1 = (ImageView) rl.findViewById(R.id.image1);
+//        image2 = (ImageView) rl.findViewById(R.id.image2);
+//        image3 = (ImageView) rl.findViewById(R.id.image3);
+//        image4 = (ImageView) rl.findViewById(R.id.image4);
+//        image5 = (ImageView) rl.findViewById(R.id.image5);
+//        image6 = (ImageView) rl.findViewById(R.id.image6);
+//        image7 = (ImageView) rl.findViewById(R.id.image7);
+//        image8 = (ImageView) rl.findViewById(R.id.image8);
         resetButton = (ImageView) rl.findViewById(R.id.reset);
         restart();
-//
-//        startTime = SystemClock.uptimeMillis();
-//        customHandler.postDelayed(updateTimerThread, 0);
-//
+
+        startTime = SystemClock.uptimeMillis();
+        customHandler.postDelayed(updateTimerThread, 0);
+
+        for (int i = 0; i < order.length; i++) {
+            final int finalI = i;
+            imageView[finalI].setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (changeable(finalI)) {
+                        int vacancy = getVacancy();
+                        imageView[vacancy].setImageResource(images[order[finalI]]);
+                        imageView[finalI].setImageResource(images[order.length-1]);
+                        stepAndUpdate(finalI);
+                    }
+                }
+            });
+
+
+        }
+
+
 //        image1.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
 //                if (changeable(order[0], vacancy)) {
@@ -202,25 +217,35 @@ public class FragmentGame_v2 extends Fragment {
 //            }
 //        });
 //
-//        resetButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                restart();
-//            }
-//        });
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                restart();
+            }
+        });
 
         return rl;
     }
 
+    private int getVacancy(){
+        for(int i=0; i<order.length; i++){
+            if(order[i] == order.length-1)
+                return i;
+        }
+        return 0;
+    }
 
-    private boolean changeable(int origin, int target) {
-        if (origin % 3 == 1) {
-            if ((target == origin + 1) || (target == origin - 3) || (target == origin + 3))
+    private boolean changeable(int curr) {
+        int vacancy = getVacancy();
+        if(curr == vacancy)  return false;
+
+        if (curr % 3 == 0) {
+            if ((vacancy == curr + 1) || (vacancy == curr - 3) || (vacancy == curr + 3))
                 return true;
-        } else if (origin % 3 == 2) {
-            if ((target == origin + 1) || (target == origin - 1) || (target == origin - 3) || (target == origin + 3))
+        } else if (curr % 3 == 1) {
+            if ((vacancy == curr + 1) || (vacancy == curr - 1) || (vacancy == curr - 3) || (vacancy == curr + 3))
                 return true;
-        } else if (origin % 3 == 0) {
-            if ((target == origin - 1) || (target == origin - 3) || (target == origin + 3))
+        } else if (curr % 3 == 2) {
+            if ((vacancy == curr - 1) || (vacancy == curr - 3) || (vacancy == curr + 3))
                 return true;
         }
 
@@ -255,25 +280,20 @@ public class FragmentGame_v2 extends Fragment {
         text_steps.setText("Steps: " + steps);
 
         // update current order information
-        int p = vacancy;
-        vacancy = order[i - 1];
-        order[i - 1] = p;
+        int vacancy = getVacancy();
+        order[vacancy] = order[i];
+        order[i] = order.length-1;
 
-        int[] target = {1, 2, 3, 4, 5, 6, 7, 8};
+
+        int[] target = {0, 1, 2, 3, 4, 5, 6, 7, 8};
         if (Arrays.equals(order, target)) {
+            //successfully sort them in the right order
             successSound = MediaPlayer.create(getActivity(), R.raw.success);
             successSound.start();
 
-
-            //successfully sort them in the right order
-            image1.setClickable(false);
-            image2.setClickable(false);
-            image3.setClickable(false);
-            image4.setClickable(false);
-            image5.setClickable(false);
-            image6.setClickable(false);
-            image7.setClickable(false);
-            image8.setClickable(false);
+            for (int k = 0; k < order.length; k++) {
+                imageView[k].setClickable(false);
+            }
 
             Vibrator v = (Vibrator) getActivity().getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
             // Vibrate for 500 milliseconds
@@ -282,32 +302,32 @@ public class FragmentGame_v2 extends Fragment {
 
             customHandler.removeCallbacks(updateTimerThread);
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-            int secs = (int) (timeInMilliseconds / 1000);
-            int mins = secs / 60;
-            secs = secs % 60;
+            int seconds = (int) (timeInMilliseconds / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
             int milliseconds = (int) (timeInMilliseconds % 1000) / 10;
 
 
             // Rank Check
             rank = 6;
-            String stag = "step" + Integer.toString(rank - 1);
-            String mstag = "ms" + Integer.toString(rank - 1);
-            String s = sharedpreferences.getString(stag, null);
-            long ms = sharedpreferences.getLong(mstag, 9999999);
+            String sTag = "step" + Integer.toString(rank - 1);
+            String msTag = "ms" + Integer.toString(rank - 1);
+            String s = sharedpreferences.getString(sTag, null);
+            long ms = sharedpreferences.getLong(msTag, 9999999);
             while (s == null || steps < Integer.parseInt(s) || (steps == Integer.parseInt(s) && timeInMilliseconds < ms)) {
                 rank--;
                 if (rank == 1)
                     break;
-                stag = "step" + Integer.toString(rank - 1);
-                mstag = "ms" + Integer.toString(rank - 1);
-                s = sharedpreferences.getString(stag, null);
-                ms = sharedpreferences.getLong(mstag, 999999);
+                sTag = "step" + Integer.toString(rank - 1);
+                msTag = "ms" + Integer.toString(rank - 1);
+                s = sharedpreferences.getString(sTag, null);
+                ms = sharedpreferences.getLong(msTag, 999999);
             }
 
 
             // Current record
-            steps_str = Integer.toString(steps);
-            time = Integer.toString(mins) + ":" + String.format("%02d", secs) + "." + String.format("%02d", milliseconds);
+            stepsStr = Integer.toString(steps);
+            time = Integer.toString(minutes) + ":" + String.format("%02d", seconds) + "." + String.format("%02d", milliseconds);
             this.milliseconds = timeInMilliseconds;
 
             // A new record
@@ -320,24 +340,24 @@ public class FragmentGame_v2 extends Fragment {
                 View alert_top5 = li.inflate(R.layout.alert_top5, null);
                 builder.setView(alert_top5);
 
-                final TextView rank_value = (TextView) alert_top5.findViewById(R.id.rank);
-                final TextView steps_value = (TextView) alert_top5.findViewById(R.id.steps);
-                final TextView time_value = (TextView) alert_top5.findViewById(R.id.time);
-                rank_value.setText(Integer.toString(rank));
-                steps_value.setText(steps_str);
-                time_value.setText(time);
+                final TextView rankValue = (TextView) alert_top5.findViewById(R.id.rank);
+                final TextView stepsValue = (TextView) alert_top5.findViewById(R.id.steps);
+                final TextView timeValue = (TextView) alert_top5.findViewById(R.id.time);
+                rankValue.setText(Integer.toString(rank));
+                stepsValue.setText(stepsStr);
+                timeValue.setText(time);
 
 
-                final EditText name_value = (EditText) alert_top5.findViewById(R.id.name);
+                final EditText nameValue = (EditText) alert_top5.findViewById(R.id.name);
                 String name = sharedpreferences.getString("name", "");
-                name_value.setText(name);
+                nameValue.setText(name);
 
                 builder.setCancelable(false).setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Code for the button of alertdialog
 
-                                String name = name_value.getText().toString();
+                                String name = nameValue.getText().toString();
                                 // trim beginning and tailing whitespaces
                                 name = name.trim();
                                 // trim duplicated whitespaces
@@ -367,18 +387,18 @@ public class FragmentGame_v2 extends Fragment {
                 ////////Pop out an alert dialog///////
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater li = LayoutInflater.from(getActivity());
-                View alert_finish = li.inflate(R.layout.alert_finish, null);
-                builder.setView(alert_finish);
+                View alertFinish = li.inflate(R.layout.alert_finish, null);
+                builder.setView(alertFinish);
 
-                final TextView steps_value = (TextView) alert_finish.findViewById(R.id.steps);
-                final TextView time_value = (TextView) alert_finish.findViewById(R.id.time);
-                steps_value.setText(steps_str);
-                time_value.setText(time);
+                final TextView stepsValue = (TextView) alertFinish.findViewById(R.id.steps);
+                final TextView timeValue = (TextView) alertFinish.findViewById(R.id.time);
+                stepsValue.setText(stepsStr);
+                timeValue.setText(time);
 
                 builder.setPositiveButton("New Game",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Code for the button of alertdialog
+                                // Code for the button of alert dialog
                                 restart();
                             }
                         }).create();
@@ -409,7 +429,7 @@ public class FragmentGame_v2 extends Fragment {
         String mstag = "ms" + Integer.toString(rank);
 
         editor.putString(ntag, name);
-        editor.putString(stag, steps_str);
+        editor.putString(stag, stepsStr);
         editor.putString(ttag, time);
         editor.putLong(mstag, milliseconds);
         editor.apply();
@@ -447,10 +467,8 @@ public class FragmentGame_v2 extends Fragment {
         steps = 0;
         text_steps.setText("Steps: " + steps);
 
-        vacancy = 8;
-
         List<Integer> dataList = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < order.length-1; i++) {
             dataList.add(i);
         }
         // generate random positions
@@ -462,9 +480,11 @@ public class FragmentGame_v2 extends Fragment {
         for (int i = 0; i < dataList.size(); i++) {
             order[i] = dataList.get(i);
         }
+        order[order.length-1] = order.length-1;
 
-        for (int i = 0; i < order.length-1; i++) {
+        for (int i = 0; i < order.length; i++) {
             imageView[i].setImageResource(images[order[i]]);
+            imageView[i].setClickable(true);
         }
 
 //        setImage(image1, order[0]);
@@ -485,14 +505,14 @@ public class FragmentGame_v2 extends Fragment {
 //        changePosition(image7, order[6]);
 //        changePosition(image8, order[7]);
 
-        image1.setClickable(true);
-        image2.setClickable(true);
-        image3.setClickable(true);
-        image4.setClickable(true);
-        image5.setClickable(true);
-        image6.setClickable(true);
-        image7.setClickable(true);
-        image8.setClickable(true);
+//        image1.setClickable(true);
+//        image2.setClickable(true);
+//        image3.setClickable(true);
+//        image4.setClickable(true);
+//        image5.setClickable(true);
+//        image6.setClickable(true);
+//        image7.setClickable(true);
+//        image8.setClickable(true);
 
         // start timer
         startTime = SystemClock.uptimeMillis();
