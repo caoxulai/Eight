@@ -1,4 +1,4 @@
-package com.game.nathan.eight;
+package com.game.bryce.eight;
 
 import android.app.AlertDialog;
 import android.app.Fragment;

@@ -1,6 +1,5 @@
-package com.game.nathan.eight;
+package com.game.bryce.eight;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

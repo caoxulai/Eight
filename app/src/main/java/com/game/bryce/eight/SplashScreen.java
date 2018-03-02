@@ -1,4 +1,4 @@
-package com.game.nathan.eight;
+package com.game.bryce.eight;
 
 /**
  * Created by Xulai on 2015/6/21.
