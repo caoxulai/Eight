@@ -33,11 +33,7 @@ import static java.lang.String.*;
  */
 public class FragmentGame_v2 extends Fragment {
     // for saving method cuz alert dialog cannot pass value out
-    private int rank = 0;
     private int steps = 0;
-    private String stepsStr = "";
-    private String time = "";
-    private long milliseconds = 999999;
 
     // order info
     private int[] order;
@@ -178,39 +174,24 @@ public class FragmentGame_v2 extends Fragment {
                 v.vibrate(500);
             }
 
-
+            // get the total time
             customHandler.removeCallbacks(updateTimerThread);
-            long timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            final long timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            final int rank = getRank(timeInMilliseconds);
+
             int seconds = (int) (timeInMilliseconds / 1000);
             int minutes = seconds / 60;
             seconds = seconds % 60;
             int milliseconds = (int) (timeInMilliseconds % 1000) / 10;
 
-
-            // Rank Check
-            rank = 6;
-            String sTag = "step" + Integer.toString(rank - 1);
-            String msTag = "ms" + Integer.toString(rank - 1);
-            String s = sharedpreferences.getString(sTag, null);
-            long ms = sharedpreferences.getLong(msTag, 9999999);
-            while (s == null || steps < Integer.parseInt(s) || (steps == Integer.parseInt(s) && timeInMilliseconds < ms)) {
-                rank--;
-                if (rank == 1)
-                    break;
-                sTag = "step" + Integer.toString(rank - 1);
-                msTag = "ms" + Integer.toString(rank - 1);
-                s = sharedpreferences.getString(sTag, null);
-                ms = sharedpreferences.getLong(msTag, 999999);
-            }
-
-
             // Current record
-            stepsStr = Integer.toString(steps);
-            time = Integer.toString(minutes) + ":" + format("%02d", seconds) + "." + format("%02d", milliseconds);
-            this.milliseconds = timeInMilliseconds;
+            String stepsStr = Integer.toString(steps);
+            String time = Integer.toString(minutes) + ":" + format("%02d", seconds) + "." + format("%02d", milliseconds);
+
 
             // A new record
             if (rank < 6) {
+
 
                 ////////Pop out an alert dialog///////
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -234,7 +215,7 @@ public class FragmentGame_v2 extends Fragment {
                 builder.setCancelable(false).setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Code for the button of alertdialog
+                                // Code for the button of alert dialog
 
                                 String name = nameValue.getText().toString();
                                 // trim beginning and tailing whitespaces
@@ -242,7 +223,7 @@ public class FragmentGame_v2 extends Fragment {
                                 // trim duplicated whitespaces
                                 name = name.replaceAll("\\s+", " ");
                                 // Write record in SharedPreferences
-                                saving(name);
+                                saving(name, rank, timeInMilliseconds);
 
                                 FragmentManager fragmentManager = getFragmentManager();
                                 // Go to Menu fragment, but it will be instantly replaced by Ranking fragment, so it won't show up. and then it will go back to Menu when you finished in ranking
@@ -287,7 +268,26 @@ public class FragmentGame_v2 extends Fragment {
         }
     }
 
-    private void saving(String name) {
+    private int getRank(long timeInMilliseconds) {
+        // Rank Check
+        int rank = 6;
+        String sTag = "step" + Integer.toString(rank - 1);
+        String msTag = "ms" + Integer.toString(rank - 1);
+        String s = sharedpreferences.getString(sTag, null);
+        long ms = sharedpreferences.getLong(msTag, 9999999);
+        while (s == null || steps < Integer.parseInt(s) || (steps == Integer.parseInt(s) && timeInMilliseconds < ms)) {
+            rank--;
+            if (rank == 1)
+                break;
+            sTag = "step" + Integer.toString(rank - 1);
+            msTag = "ms" + Integer.toString(rank - 1);
+            s = sharedpreferences.getString(sTag, null);
+            ms = sharedpreferences.getLong(msTag, 999999);
+        }
+        return rank;
+    }
+
+    private void saving(String name, int rank, long timeInMilliseconds) {
         sharedpreferences = this.getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString("name", name);
@@ -302,10 +302,19 @@ public class FragmentGame_v2 extends Fragment {
         String timeTag = "time" + Integer.toString(rank);
         String millisecondsTag = "ms" + Integer.toString(rank);
 
+        int seconds = (int) (timeInMilliseconds / 1000);
+        int minutes = seconds / 60;
+        seconds = seconds % 60;
+        int milliseconds = (int) (timeInMilliseconds % 1000) / 10;
+
+        // Current record
+        String stepsStr = Integer.toString(steps);
+        String time = Integer.toString(minutes) + ":" + format("%02d", seconds) + "." + format("%02d", milliseconds);
+
         editor.putString(nameTag, name);
         editor.putString(stepTag, stepsStr);
         editor.putString(timeTag, time);
-        editor.putLong(millisecondsTag, milliseconds);
+        editor.putLong(millisecondsTag, timeInMilliseconds);
         editor.apply();
     }
 

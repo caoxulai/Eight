@@ -4,6 +4,8 @@ A fun android game to play, developed in Android Studio.
 
 ### To do
 
+- [ ] Introduce Record class
+- [ ] Introduce Ranking class
 - [ ] make all fragment responsive
 - [ ] clean up the code in fragment_game_v2.java
 - [ ] fragment_menu v2
