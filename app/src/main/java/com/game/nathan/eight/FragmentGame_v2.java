@@ -41,9 +41,15 @@ public class FragmentGame_v2 extends Fragment {
     private String time = "";
     private long milliseconds = 999999;
 
-    // position info
-    private int vacancy = 9;
-    private int position[] = {5, 8, 7, 3, 1, 4, 6, 2};
+    // order info
+    private int vacancy = 8;
+    private int order[] = {5, 0, 7, 3, 1, 4, 6, 2};
+
+
+    private ImageView[] imageView;
+    private int[] images = {R.drawable.one, R.drawable.two, R.drawable.three,
+            R.drawable.four, R.drawable.five, R.drawable.six,
+            R.drawable.seven, R.drawable.eight, R.drawable.transparent};
 
 
     private static TextView text_steps;
@@ -98,6 +104,18 @@ public class FragmentGame_v2 extends Fragment {
 
         text_steps = (TextView) rl.findViewById(R.id.textSteps);
         timerValue = (TextView) rl.findViewById(R.id.timerValue);
+
+        imageView = new ImageView[9];
+        imageView[0] = (ImageView) rl.findViewById(R.id.image1);
+        imageView[1] = (ImageView) rl.findViewById(R.id.image2);
+        imageView[2] = (ImageView) rl.findViewById(R.id.image3);
+        imageView[3] = (ImageView) rl.findViewById(R.id.image4);
+        imageView[4] = (ImageView) rl.findViewById(R.id.image5);
+        imageView[5] = (ImageView) rl.findViewById(R.id.image6);
+        imageView[6] = (ImageView) rl.findViewById(R.id.image7);
+        imageView[7] = (ImageView) rl.findViewById(R.id.image8);
+        imageView[8] = (ImageView) rl.findViewById(R.id.vacancy);
+
         image1 = (ImageView) rl.findViewById(R.id.image1);
         image2 = (ImageView) rl.findViewById(R.id.image2);
         image3 = (ImageView) rl.findViewById(R.id.image3);
@@ -114,7 +132,7 @@ public class FragmentGame_v2 extends Fragment {
 //
 //        image1.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
-//                if (changeable(position[0], vacancy)) {
+//                if (changeable(order[0], vacancy)) {
 //                    changePosition(image1, vacancy);
 //                    stepAndUpdate(1);
 //                }
@@ -123,7 +141,7 @@ public class FragmentGame_v2 extends Fragment {
 //
 //        image2.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
-//                if (changeable(position[1], vacancy)) {
+//                if (changeable(order[1], vacancy)) {
 //                    changePosition(image2, vacancy);
 //                    stepAndUpdate(2);
 //                }
@@ -132,7 +150,7 @@ public class FragmentGame_v2 extends Fragment {
 //
 //        image3.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
-//                if (changeable(position[2], vacancy)) {
+//                if (changeable(order[2], vacancy)) {
 //                    changePosition(image3, vacancy);
 //                    stepAndUpdate(3);
 //                }
@@ -141,7 +159,7 @@ public class FragmentGame_v2 extends Fragment {
 //
 //        image4.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
-//                if (changeable(position[3], vacancy)) {
+//                if (changeable(order[3], vacancy)) {
 //                    changePosition(image4, vacancy);
 //                    stepAndUpdate(4);
 //                }
@@ -150,7 +168,7 @@ public class FragmentGame_v2 extends Fragment {
 //
 //        image5.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
-//                if (changeable(position[4], vacancy)) {
+//                if (changeable(order[4], vacancy)) {
 //                    changePosition(image5, vacancy);
 //                    stepAndUpdate(5);
 //                }
@@ -159,7 +177,7 @@ public class FragmentGame_v2 extends Fragment {
 //
 //        image6.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
-//                if (changeable(position[5], vacancy)) {
+//                if (changeable(order[5], vacancy)) {
 //                    changePosition(image6, vacancy);
 //                    stepAndUpdate(6);
 //                }
@@ -168,7 +186,7 @@ public class FragmentGame_v2 extends Fragment {
 //
 //        image7.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
-//                if (changeable(position[6], vacancy)) {
+//                if (changeable(order[6], vacancy)) {
 //                    changePosition(image7, vacancy);
 //                    stepAndUpdate(7);
 //                }
@@ -177,7 +195,7 @@ public class FragmentGame_v2 extends Fragment {
 //
 //        image8.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
-//                if (changeable(position[7], vacancy)) {
+//                if (changeable(order[7], vacancy)) {
 //                    changePosition(image8, vacancy);
 //                    stepAndUpdate(8);
 //                }
@@ -210,9 +228,8 @@ public class FragmentGame_v2 extends Fragment {
 
     }
 
-
     private void changePosition(ImageView img, int pos) {
-        // locate 'img' to position 'pos'
+        // locate 'img' to order 'pos'
         RelativeLayout.LayoutParams par = (RelativeLayout.LayoutParams) img.getLayoutParams();
         // image1.setImageResource(R.drawable.image2);
         float d = getResources().getDisplayMetrics().density;
@@ -237,13 +254,13 @@ public class FragmentGame_v2 extends Fragment {
         steps++;
         text_steps.setText("Steps: " + steps);
 
-        // update current position information
+        // update current order information
         int p = vacancy;
-        vacancy = position[i - 1];
-        position[i - 1] = p;
+        vacancy = order[i - 1];
+        order[i - 1] = p;
 
         int[] target = {1, 2, 3, 4, 5, 6, 7, 8};
-        if (Arrays.equals(position, target)) {
+        if (Arrays.equals(order, target)) {
             successSound = MediaPlayer.create(getActivity(), R.raw.success);
             successSound.start();
 
@@ -430,10 +447,10 @@ public class FragmentGame_v2 extends Fragment {
         steps = 0;
         text_steps.setText("Steps: " + steps);
 
-        vacancy = 9;
+        vacancy = 8;
 
         List<Integer> dataList = new ArrayList<>();
-        for (int i = 1; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             dataList.add(i);
         }
         // generate random positions
@@ -443,17 +460,30 @@ public class FragmentGame_v2 extends Fragment {
         }
 
         for (int i = 0; i < dataList.size(); i++) {
-            position[i] = dataList.get(i);
+            order[i] = dataList.get(i);
         }
 
-        changePosition(image1, position[0]);
-        changePosition(image2, position[1]);
-        changePosition(image3, position[2]);
-        changePosition(image4, position[3]);
-        changePosition(image5, position[4]);
-        changePosition(image6, position[5]);
-        changePosition(image7, position[6]);
-        changePosition(image8, position[7]);
+        for (int i = 0; i < order.length-1; i++) {
+            imageView[i].setImageResource(images[order[i]]);
+        }
+
+//        setImage(image1, order[0]);
+//        setImage(image2, order[1]);
+//        setImage(image3, order[2]);
+//        setImage(image4, order[3]);
+//        setImage(image5, order[4]);
+//        setImage(image6, order[5]);
+//        setImage(image7, order[6]);
+//        setImage(image8, order[7]);
+
+//        changePosition(image1, order[0]);
+//        changePosition(image2, order[1]);
+//        changePosition(image3, order[2]);
+//        changePosition(image4, order[3]);
+//        changePosition(image5, order[4]);
+//        changePosition(image6, order[5]);
+//        changePosition(image7, order[6]);
+//        changePosition(image8, order[7]);
 
         image1.setClickable(true);
         image2.setClickable(true);
