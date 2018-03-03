@@ -1,5 +1,8 @@
 package com.game.bryce.eight;
 
+import util.Record;
+
+
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -177,21 +180,11 @@ public class FragmentGame_v2 extends Fragment {
             // get the total time
             customHandler.removeCallbacks(updateTimerThread);
             final long timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            final Record currRecord = new Record(steps, timeInMilliseconds);
             final int rank = getRank(timeInMilliseconds);
-
-            int seconds = (int) (timeInMilliseconds / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
-            int milliseconds = (int) (timeInMilliseconds % 1000) / 10;
-
-            // Current record
-            String stepsStr = Integer.toString(steps);
-            String time = Integer.toString(minutes) + ":" + format("%02d", seconds) + "." + format("%02d", milliseconds);
-
 
             // A new record
             if (rank < 6) {
-
 
                 ////////Pop out an alert dialog///////
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -204,13 +197,13 @@ public class FragmentGame_v2 extends Fragment {
                 final TextView stepsValue = (TextView) alertTop5.findViewById(R.id.steps);
                 final TextView timeValue = (TextView) alertTop5.findViewById(R.id.time);
                 rankValue.setText(String.valueOf(rank));
-                stepsValue.setText(stepsStr);
-                timeValue.setText(time);
+                stepsValue.setText(currRecord.getStepsString());
+                timeValue.setText(currRecord.getTimeString());
 
 
                 final EditText nameValue = (EditText) alertTop5.findViewById(R.id.name);
-                String name = sharedpreferences.getString("name", "");
-                nameValue.setText(name);
+                String lastName = sharedpreferences.getString("name", "");
+                nameValue.setText(lastName);
 
                 builder.setCancelable(false).setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
@@ -223,7 +216,8 @@ public class FragmentGame_v2 extends Fragment {
                                 // trim duplicated whitespaces
                                 name = name.replaceAll("\\s+", " ");
                                 // Write record in SharedPreferences
-                                saving(name, rank, timeInMilliseconds);
+                                currRecord.setName(name);
+                                saving(rank, currRecord);
 
                                 FragmentManager fragmentManager = getFragmentManager();
                                 // Go to Menu fragment, but it will be instantly replaced by Ranking fragment, so it won't show up. and then it will go back to Menu when you finished in ranking
@@ -252,8 +246,8 @@ public class FragmentGame_v2 extends Fragment {
 
                 final TextView stepsValue = (TextView) alertFinish.findViewById(R.id.steps);
                 final TextView timeValue = (TextView) alertFinish.findViewById(R.id.time);
-                stepsValue.setText(stepsStr);
-                timeValue.setText(time);
+                stepsValue.setText(currRecord.getStepsString());
+                timeValue.setText(currRecord.getTimeString());
 
                 builder.setPositiveButton("New Game",
                         new DialogInterface.OnClickListener() {
@@ -287,10 +281,10 @@ public class FragmentGame_v2 extends Fragment {
         return rank;
     }
 
-    private void saving(String name, int rank, long timeInMilliseconds) {
+    private void saving(int rank, Record record) {
         sharedpreferences = this.getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString("name", name);
+        editor.putString("name", record.getName());
         editor.commit();
 
         for (int k = 4; k >= rank; k--) {
@@ -302,19 +296,10 @@ public class FragmentGame_v2 extends Fragment {
         String timeTag = "time" + Integer.toString(rank);
         String millisecondsTag = "ms" + Integer.toString(rank);
 
-        int seconds = (int) (timeInMilliseconds / 1000);
-        int minutes = seconds / 60;
-        seconds = seconds % 60;
-        int milliseconds = (int) (timeInMilliseconds % 1000) / 10;
-
-        // Current record
-        String stepsStr = Integer.toString(steps);
-        String time = Integer.toString(minutes) + ":" + format("%02d", seconds) + "." + format("%02d", milliseconds);
-
-        editor.putString(nameTag, name);
-        editor.putString(stepTag, stepsStr);
-        editor.putString(timeTag, time);
-        editor.putLong(millisecondsTag, timeInMilliseconds);
+        editor.putString(nameTag, record.getName());
+        editor.putString(stepTag, record.getStepsString());
+        editor.putString(timeTag, record.getTimeString());
+        editor.putLong(millisecondsTag, record.getTime());
         editor.apply();
     }
 
