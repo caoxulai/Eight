@@ -24,6 +24,13 @@ public class Record {
         this.timeString = Integer.toString(minutes) + ":" + format("%02d", seconds) + "." + format("%02d", milliseconds);
     }
 
+    public Record(String name, int steps, String timeString, long time) {
+        this.name = name;
+        this.steps = steps;
+        this.timeString = timeString;
+        this.time = time;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -46,5 +53,10 @@ public class Record {
 
     public String getTimeString() {
         return timeString;
+    }
+
+    public long compareTo(Record r){
+        // return positive, r is better record; negative, r is worse;
+        return time != r.getTime() ? time-r.getTime(): steps-r.getSteps();
     }
 }

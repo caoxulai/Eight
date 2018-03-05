@@ -1,5 +1,6 @@
 package com.game.bryce.eight;
 
+import util.Ranking;
 import util.Record;
 
 
@@ -57,6 +58,7 @@ public class FragmentGame_v2 extends Fragment {
     // declare SharedPreferences as a database to store rankings
     public static final String MyPREFERENCES = "rankings";
     SharedPreferences sharedpreferences;
+    Ranking ranking;
 
     // a Runnable instance to be timer
     private Runnable updateTimerThread = new Runnable() {
@@ -80,6 +82,7 @@ public class FragmentGame_v2 extends Fragment {
                              Bundle savedInstanceState) {
 
         sharedpreferences = this.getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        ranking = new Ranking(sharedpreferences);
 
         ConstraintLayout fragmentGame = (ConstraintLayout) inflater.inflate(R.layout.fragment_game_v2, container, false);
 
@@ -181,7 +184,7 @@ public class FragmentGame_v2 extends Fragment {
             customHandler.removeCallbacks(updateTimerThread);
             final long timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             final Record currRecord = new Record(steps, timeInMilliseconds);
-            final int rank = getRank(timeInMilliseconds);
+            final int rank = ranking.getRank(currRecord);
 
             // A new record
             if (rank < 6) {
@@ -202,8 +205,7 @@ public class FragmentGame_v2 extends Fragment {
 
 
                 final EditText nameValue = (EditText) alertTop5.findViewById(R.id.name);
-                String lastName = sharedpreferences.getString("name", "");
-                nameValue.setText(lastName);
+                nameValue.setText(ranking.getLastName());
 
                 builder.setCancelable(false).setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
@@ -215,21 +217,21 @@ public class FragmentGame_v2 extends Fragment {
                                 name = name.trim();
                                 // trim duplicated whitespaces
                                 name = name.replaceAll("\\s+", " ");
-                                // Write record in SharedPreferences
+                                // add record in ranking
                                 currRecord.setName(name);
-                                saving(rank, currRecord);
+                                ranking.addRecord(currRecord);
 
                                 FragmentManager fragmentManager = getFragmentManager();
                                 // Go to Menu fragment, but it will be instantly replaced by Ranking fragment, so it won't show up. and then it will go back to Menu when you finished in ranking
                                 fragmentManager.popBackStack();
                                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                                 // The third input is alias of this new fragment
-                                FragmentRanking f_ranking = new FragmentRanking();
+                                FragmentRanking fragmentRanking = new FragmentRanking();
                                 Bundle bundle = new Bundle();
                                 bundle.putInt("rank", rank);
-                                f_ranking.setArguments(bundle);
+                                fragmentRanking.setArguments(bundle);
 
-                                transaction.replace(R.id.framelayout, f_ranking, "ranking");
+                                transaction.replace(R.id.framelayout, fragmentRanking, "ranking");
                                 transaction.addToBackStack(null);
                                 transaction.commit();
                             }
@@ -261,73 +263,6 @@ public class FragmentGame_v2 extends Fragment {
             }
         }
     }
-
-    private int getRank(long timeInMilliseconds) {
-        // Rank Check
-        int rank = 6;
-        String sTag = "step" + Integer.toString(rank - 1);
-        String msTag = "ms" + Integer.toString(rank - 1);
-        String s = sharedpreferences.getString(sTag, null);
-        long ms = sharedpreferences.getLong(msTag, 9999999);
-        while (s == null || steps < Integer.parseInt(s) || (steps == Integer.parseInt(s) && timeInMilliseconds < ms)) {
-            rank--;
-            if (rank == 1)
-                break;
-            sTag = "step" + Integer.toString(rank - 1);
-            msTag = "ms" + Integer.toString(rank - 1);
-            s = sharedpreferences.getString(sTag, null);
-            ms = sharedpreferences.getLong(msTag, 999999);
-        }
-        return rank;
-    }
-
-    private void saving(int rank, Record record) {
-        sharedpreferences = this.getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString("name", record.getName());
-        editor.commit();
-
-        for (int k = 4; k >= rank; k--) {
-            overwrite(k);
-        }
-
-        String nameTag = "name" + Integer.toString(rank);
-        String stepTag = "step" + Integer.toString(rank);
-        String timeTag = "time" + Integer.toString(rank);
-        String millisecondsTag = "ms" + Integer.toString(rank);
-
-        editor.putString(nameTag, record.getName());
-        editor.putString(stepTag, record.getStepsString());
-        editor.putString(timeTag, record.getTimeString());
-        editor.putLong(millisecondsTag, record.getTime());
-        editor.apply();
-    }
-
-    private void overwrite(int rank) {
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-        String nameTag = "name" + Integer.toString(rank);
-        String stepTag = "step" + Integer.toString(rank);
-        String timeTag = "time" + Integer.toString(rank);
-        String millisecondsTag = "ms" + Integer.toString(rank);
-        String n = sharedpreferences.getString(nameTag, null);
-        String s = sharedpreferences.getString(stepTag, null);
-        String t = sharedpreferences.getString(timeTag, null);
-        long ms = sharedpreferences.getLong(millisecondsTag, 9999);
-
-
-        nameTag = "name" + Integer.toString(rank + 1);
-        stepTag = "step" + Integer.toString(rank + 1);
-        timeTag = "time" + Integer.toString(rank + 1);
-        millisecondsTag = "ms" + Integer.toString(rank + 1);
-
-        editor.putString(nameTag, n);
-        editor.putString(stepTag, s);
-        editor.putString(timeTag, t);
-        editor.putLong(millisecondsTag, ms);
-        editor.apply();
-    }
-
 
     private void restart() {
         // reset steps
