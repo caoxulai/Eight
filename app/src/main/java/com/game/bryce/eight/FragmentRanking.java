@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,32 +41,32 @@ public class FragmentRanking extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedpreferences = this.getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
-        RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.fragment_ranking, container, false);
+        ConstraintLayout fragmentRanking = (ConstraintLayout) inflater.inflate(R.layout.fragment_ranking_v2, container, false);
 
-        name[0] = (TextView) rl.findViewById(R.id.name1);
-        step[0] = (TextView) rl.findViewById(R.id.step1);
-        time[0] = (TextView) rl.findViewById(R.id.time1);
+        name[0] = (TextView) fragmentRanking.findViewById(R.id.name1);
+        step[0] = (TextView) fragmentRanking.findViewById(R.id.step1);
+        time[0] = (TextView) fragmentRanking.findViewById(R.id.time1);
 
-        name[1] = (TextView) rl.findViewById(R.id.name2);
-        step[1] = (TextView) rl.findViewById(R.id.step2);
-        time[1] = (TextView) rl.findViewById(R.id.time2);
+        name[1] = (TextView) fragmentRanking.findViewById(R.id.name2);
+        step[1] = (TextView) fragmentRanking.findViewById(R.id.step2);
+        time[1] = (TextView) fragmentRanking.findViewById(R.id.time2);
 
-        name[2] = (TextView) rl.findViewById(R.id.name3);
-        step[2] = (TextView) rl.findViewById(R.id.step3);
-        time[2] = (TextView) rl.findViewById(R.id.time3);
+        name[2] = (TextView) fragmentRanking.findViewById(R.id.name3);
+        step[2] = (TextView) fragmentRanking.findViewById(R.id.step3);
+        time[2] = (TextView) fragmentRanking.findViewById(R.id.time3);
 
-        name[3] = (TextView) rl.findViewById(R.id.name4);
-        step[3] = (TextView) rl.findViewById(R.id.step4);
-        time[3] = (TextView) rl.findViewById(R.id.time4);
+        name[3] = (TextView) fragmentRanking.findViewById(R.id.name4);
+        step[3] = (TextView) fragmentRanking.findViewById(R.id.step4);
+        time[3] = (TextView) fragmentRanking.findViewById(R.id.time4);
 
-        name[4] = (TextView) rl.findViewById(R.id.name5);
-        step[4] = (TextView) rl.findViewById(R.id.step5);
-        time[4] = (TextView) rl.findViewById(R.id.time5);
+        name[4] = (TextView) fragmentRanking.findViewById(R.id.name5);
+        step[4] = (TextView) fragmentRanking.findViewById(R.id.step5);
+        time[4] = (TextView) fragmentRanking.findViewById(R.id.time5);
 
-        new_game = (TextView) rl.findViewById(R.id.new_game);
+        new_game = (TextView) fragmentRanking.findViewById(R.id.new_game);
 
 
-        resetButton = (ImageView) rl.findViewById(R.id.reset);
+        resetButton = (ImageView) fragmentRanking.findViewById(R.id.reset);
 
         for (int i = 1; i <= 5; i++) {
             initiate(i);
@@ -124,7 +125,7 @@ public class FragmentRanking extends Fragment {
             }
         });
 
-        return rl;
+        return fragmentRanking;
     }
 
     private void resetRanking() {
