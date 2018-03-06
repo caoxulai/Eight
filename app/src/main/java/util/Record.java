@@ -8,9 +8,9 @@ import static java.lang.String.format;
 
 public class Record {
     private String name;
-    private int steps;
     private String timeString;
     private long time;
+    private int steps;
 
     public Record(int steps, long totalTime){
         this.name = "anonymous";

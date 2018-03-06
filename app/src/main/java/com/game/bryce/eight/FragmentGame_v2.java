@@ -226,7 +226,7 @@ public class FragmentGame_v2 extends Fragment {
                                 fragmentManager.popBackStack();
                                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                                 // The third input is alias of this new fragment
-                                FragmentRanking fragmentRanking = new FragmentRanking();
+                                FragmentRanking_v2 fragmentRanking = new FragmentRanking_v2();
                                 Bundle bundle = new Bundle();
                                 bundle.putInt("rank", rank);
                                 fragmentRanking.setArguments(bundle);

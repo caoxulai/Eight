@@ -54,7 +54,7 @@ public class FragmentMenu extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 // The third input is alias of this new fragment
-                transaction.replace(R.id.framelayout, new FragmentRanking(), "ranking");
+                transaction.replace(R.id.framelayout, new FragmentRanking_v2(), "ranking");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

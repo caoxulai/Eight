@@ -35,6 +35,10 @@ public class Ranking {
         }
     }
 
+    public Record[] getTops() {
+        return tops;
+    }
+
     public int getRank(Record record){
         int rank = 1;
         for(Record top: tops){
