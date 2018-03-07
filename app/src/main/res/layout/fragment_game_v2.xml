@@ -52,10 +52,10 @@
         app:layout_constraintTop_toTopOf="@+id/textSteps" />
 
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/numberBoard"
         android:layout_width="300dp"
-        android:layout_height="310dp"
+        android:layout_height="320dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -70,100 +70,123 @@
         <ImageView
             android:id="@+id/image1"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:src="@drawable/one" />
+            android:layout_height="0dp"
+            android:src="@drawable/one"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/image2"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignLeft="@+id/image5"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/image5"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:src="@drawable/two" />
+            android:layout_height="0dp"
+            android:src="@drawable/two"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
 
         <ImageView
             android:id="@+id/image3"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:src="@drawable/three" />
+            android:layout_height="0dp"
+            android:src="@drawable/three"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/image4"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:src="@drawable/four" />
+            android:layout_height="0dp"
+            android:src="@drawable/four"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
 
         <ImageView
             android:id="@+id/image5"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignLeft="@+id/image8"
-            android:layout_alignStart="@+id/image8"
-            android:layout_alignTop="@+id/image6"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:src="@drawable/five" />
+            android:layout_height="0dp"
+            android:src="@drawable/five"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
 
         <ImageView
             android:id="@+id/image6"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:src="@drawable/six" />
+
+            android:layout_height="0dp"
+            android:src="@drawable/six"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
 
         <ImageView
             android:id="@+id/image7"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:src="@drawable/seven" />
+            android:layout_height="0dp"
+            android:src="@drawable/seven"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/image8"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:src="@drawable/eight" />
+            android:layout_height="0dp"
+            android:src="@drawable/eight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/vacancy"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill_horizontal"
-            android:src="@drawable/transparent" />
+            android:layout_height="0dp"
+            android:src="@drawable/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>
