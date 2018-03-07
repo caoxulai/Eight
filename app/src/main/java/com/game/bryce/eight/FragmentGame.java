@@ -1,11 +1,10 @@
-package com.game.nathan.eight;
+package com.game.bryce.eight;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -36,14 +35,14 @@ import android.os.Vibrator;
  */
 public class FragmentGame extends Fragment {
 
-    private MediaPlayer succees_sound;
+    private MediaPlayer successSound;
 
     // For saving method cuz alert dialog cannot pass value out
     private int rank = 0;
     private int steps = 0;
     private String steps_str = "";
     private String time = "";
-    private long miliseconds = 999999;
+    private long milliseconds = 999999;
 
     // position info
     private int vacancy = 9;
@@ -100,7 +99,7 @@ public class FragmentGame extends Fragment {
 
         RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.fragment_game, container, false);
 
-        text_steps = (TextView) rl.findViewById(R.id.text_steps);
+        text_steps = (TextView) rl.findViewById(R.id.textSteps);
         timerValue = (TextView) rl.findViewById(R.id.timerValue);
         image1 = (ImageView) rl.findViewById(R.id.image1);
         image2 = (ImageView) rl.findViewById(R.id.image2);
@@ -118,7 +117,7 @@ public class FragmentGame extends Fragment {
 
         image1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (changable(position[0], vacancy)) {
+                if (changeable(position[0], vacancy)) {
                     changePosition(image1, vacancy);
                     stepAndUpdate(1);
                 }
@@ -127,7 +126,7 @@ public class FragmentGame extends Fragment {
 
         image2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (changable(position[1], vacancy)) {
+                if (changeable(position[1], vacancy)) {
                     changePosition(image2, vacancy);
                     stepAndUpdate(2);
                 }
@@ -136,7 +135,7 @@ public class FragmentGame extends Fragment {
 
         image3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (changable(position[2], vacancy)) {
+                if (changeable(position[2], vacancy)) {
                     changePosition(image3, vacancy);
                     stepAndUpdate(3);
                 }
@@ -145,7 +144,7 @@ public class FragmentGame extends Fragment {
 
         image4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (changable(position[3], vacancy)) {
+                if (changeable(position[3], vacancy)) {
                     changePosition(image4, vacancy);
                     stepAndUpdate(4);
                 }
@@ -154,7 +153,7 @@ public class FragmentGame extends Fragment {
 
         image5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (changable(position[4], vacancy)) {
+                if (changeable(position[4], vacancy)) {
                     changePosition(image5, vacancy);
                     stepAndUpdate(5);
                 }
@@ -163,7 +162,7 @@ public class FragmentGame extends Fragment {
 
         image6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (changable(position[5], vacancy)) {
+                if (changeable(position[5], vacancy)) {
                     changePosition(image6, vacancy);
                     stepAndUpdate(6);
                 }
@@ -172,7 +171,7 @@ public class FragmentGame extends Fragment {
 
         image7.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (changable(position[6], vacancy)) {
+                if (changeable(position[6], vacancy)) {
                     changePosition(image7, vacancy);
                     stepAndUpdate(7);
                 }
@@ -181,7 +180,7 @@ public class FragmentGame extends Fragment {
 
         image8.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (changable(position[7], vacancy)) {
+                if (changeable(position[7], vacancy)) {
                     changePosition(image8, vacancy);
                     stepAndUpdate(8);
                 }
@@ -198,7 +197,7 @@ public class FragmentGame extends Fragment {
     }
 
 
-    private boolean changable(int origin, int target) {
+    private boolean changeable(int origin, int target) {
         if (origin % 3 == 1) {
             if ((target == origin + 1) || (target == origin - 3) || (target == origin + 3))
                 return true;
@@ -220,7 +219,7 @@ public class FragmentGame extends Fragment {
         RelativeLayout.LayoutParams par = (RelativeLayout.LayoutParams) img.getLayoutParams();
         // image1.setImageResource(R.drawable.image2);
         float d = getResources().getDisplayMetrics().density;
-        //get parent density and tranform dip to pix
+        //get parent density and transform dip to pix
         par.topMargin = (int) (TMar(pos) * d);
         par.leftMargin = (int) (LMar(pos) * d);
 
@@ -241,15 +240,15 @@ public class FragmentGame extends Fragment {
         steps++;
         text_steps.setText("Steps: " + steps);
 
-        // update current postion infomation
+        // update current position information
         int p = vacancy;
         vacancy = position[i - 1];
         position[i - 1] = p;
 
         int[] target = {1, 2, 3, 4, 5, 6, 7, 8};
         if (Arrays.equals(position, target)) {
-            succees_sound = MediaPlayer.create(getActivity(), R.raw.success);
-            succees_sound.start();
+            successSound = MediaPlayer.create(getActivity(), R.raw.success);
+            successSound.start();
 
 
             //successfully sort them in the right order
@@ -295,7 +294,7 @@ public class FragmentGame extends Fragment {
             // Current record
             steps_str = Integer.toString(steps);
             time = Integer.toString(mins) + ":" + String.format("%02d", secs) + "." + String.format("%02d", milliseconds);
-            miliseconds = timeInMilliseconds;
+            this.milliseconds = timeInMilliseconds;
 
             // A new record
             if (rank < 6) {
@@ -398,7 +397,7 @@ public class FragmentGame extends Fragment {
         editor.putString(ntag, name);
         editor.putString(stag, steps_str);
         editor.putString(ttag, time);
-        editor.putLong(mstag, miliseconds);
+        editor.putLong(mstag, milliseconds);
         editor.apply();
 
 
@@ -436,7 +435,7 @@ public class FragmentGame extends Fragment {
 
         vacancy = 9;
 
-        List<Integer> dataList = new ArrayList<Integer>();
+        List<Integer> dataList = new ArrayList<>();
         for (int i = 1; i < 9; i++) {
             dataList.add(i);
         }

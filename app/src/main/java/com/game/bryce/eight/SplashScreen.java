@@ -1,4 +1,4 @@
-package com.game.nathan.eight;
+package com.game.bryce.eight;
 
 /**
  * Created by Xulai on 2015/6/21.
@@ -16,7 +16,7 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_screen);
+        setContentView(R.layout.splash_screen_v2);
 
         new Handler().postDelayed(new Runnable() {
 

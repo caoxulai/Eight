@@ -1,4 +1,4 @@
-package com.game.nathan.eight;
+package com.game.bryce.eight;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -10,66 +10,68 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import util.Ranking;
+import util.Record;
 
 /**
  * Created by nathan on 7/9/2015.
  */
-public class FragmentRanking extends Fragment {
+public class FragmentRanking_v2 extends Fragment {
 
     private static TextView[] name = new TextView[5];
     private static TextView[] step = new TextView[5];
     private static TextView[] time = new TextView[5];
-    private static TextView new_game;
+    private static TextView newGame;
 
     private static ImageView resetButton;
 
     // Declare SharedPreferences
     public static final String MyPREFERENCES = "rankings";
     SharedPreferences sharedpreferences;
+    Ranking ranking;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedpreferences = this.getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        ranking = new Ranking(sharedpreferences);
 
-        RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.fragment_ranking, container, false);
+        ConstraintLayout fragmentRanking = (ConstraintLayout) inflater.inflate(R.layout.fragment_ranking_v2, container, false);
 
-        name[0] = (TextView) rl.findViewById(R.id.name1);
-        step[0] = (TextView) rl.findViewById(R.id.step1);
-        time[0] = (TextView) rl.findViewById(R.id.time1);
+        name[0] = (TextView) fragmentRanking.findViewById(R.id.name1);
+        step[0] = (TextView) fragmentRanking.findViewById(R.id.step1);
+        time[0] = (TextView) fragmentRanking.findViewById(R.id.time1);
 
-        name[1] = (TextView) rl.findViewById(R.id.name2);
-        step[1] = (TextView) rl.findViewById(R.id.step2);
-        time[1] = (TextView) rl.findViewById(R.id.time2);
+        name[1] = (TextView) fragmentRanking.findViewById(R.id.name2);
+        step[1] = (TextView) fragmentRanking.findViewById(R.id.step2);
+        time[1] = (TextView) fragmentRanking.findViewById(R.id.time2);
 
-        name[2] = (TextView) rl.findViewById(R.id.name3);
-        step[2] = (TextView) rl.findViewById(R.id.step3);
-        time[2] = (TextView) rl.findViewById(R.id.time3);
+        name[2] = (TextView) fragmentRanking.findViewById(R.id.name3);
+        step[2] = (TextView) fragmentRanking.findViewById(R.id.step3);
+        time[2] = (TextView) fragmentRanking.findViewById(R.id.time3);
 
-        name[3] = (TextView) rl.findViewById(R.id.name4);
-        step[3] = (TextView) rl.findViewById(R.id.step4);
-        time[3] = (TextView) rl.findViewById(R.id.time4);
+        name[3] = (TextView) fragmentRanking.findViewById(R.id.name4);
+        step[3] = (TextView) fragmentRanking.findViewById(R.id.step4);
+        time[3] = (TextView) fragmentRanking.findViewById(R.id.time4);
 
-        name[4] = (TextView) rl.findViewById(R.id.name5);
-        step[4] = (TextView) rl.findViewById(R.id.step5);
-        time[4] = (TextView) rl.findViewById(R.id.time5);
+        name[4] = (TextView) fragmentRanking.findViewById(R.id.name5);
+        step[4] = (TextView) fragmentRanking.findViewById(R.id.step5);
+        time[4] = (TextView) fragmentRanking.findViewById(R.id.time5);
 
-        new_game = (TextView) rl.findViewById(R.id.new_game);
+        newGame = (TextView) fragmentRanking.findViewById(R.id.new_game);
 
+        resetButton = (ImageView) fragmentRanking.findViewById(R.id.reset);
 
-        resetButton = (ImageView) rl.findViewById(R.id.reset);
-
-        for (int i = 1; i <= 5; i++) {
-            initiate(i);
-        }
+        publishRanking();
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -111,44 +113,44 @@ public class FragmentRanking extends Fragment {
             }
         });
 
-        new_game.setOnClickListener(new View.OnClickListener() {
+        newGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
                 // Go to Menu fragment, but it will be instantly replaced by Ranking fragment, so it won't show up. and then it will go back to Menu when you finished in ranking
                 fragmentManager.popBackStack();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 // The third input is alias of this new fragment
-                transaction.replace(R.id.framelayout, new FragmentGame(), "game");
+                transaction.replace(R.id.framelayout, new FragmentGame_v2(), "game");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
 
-        return rl;
+        return fragmentRanking;
     }
 
     private void resetRanking() {
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.clear().commit();
-
-        for (int i = 1; i <= 5; i++) {
-            initiate(i);
-        }
+        ranking.clear();
+        publishRanking();
 
         Toast.makeText(getActivity().getApplicationContext(), "Ranking Reset", Toast.LENGTH_SHORT).show();
 
     }
 
-    private void initiate(int i) {
-        String ntag = "name" + Integer.toString(i);
-        String stag = "step" + Integer.toString(i);
-        String ttag = "time" + Integer.toString(i);
-        String n = sharedpreferences.getString(ntag, "----");
-        String s = sharedpreferences.getString(stag, "--");
-        String t = sharedpreferences.getString(ttag, "--:--.--");
-        name[i - 1].setText(n);
-        step[i - 1].setText(s);
-        time[i - 1].setText(t);
+    private void publishRanking() {
+        Record[] tops = ranking.getTops();
+        for(int i=0; i<tops.length; i++){
+            if(tops[i] != null) {
+                name[i].setText(tops[i].getName());
+                time[i].setText(tops[i].getTimeString());
+                step[i].setText(tops[i].getStepsString());
+            }
+            else{
+                name[i].setText("----");
+                time[i].setText("--");
+                step[i].setText("--:--.--");
+            }
+        }
     }
 
 }

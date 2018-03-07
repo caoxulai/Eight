@@ -4,7 +4,11 @@ A fun android game to play, developed in Android Studio.
 
 ### To do
 
+- [x] Introduce Record class
+- [ ] Introduce Ranking class
+- [ ] Save integer steps into shared preference instead of string
 - [ ] make all fragment responsive
+- [ ] clean up the code in fragment_game_v2.java
 - [ ] fragment_menu v2
 - [ ] fragment_ranking v2
 - [ ] alert_top5 v2
