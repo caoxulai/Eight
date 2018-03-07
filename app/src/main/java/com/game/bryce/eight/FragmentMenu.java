@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,10 @@ public class FragmentMenu extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.fragment_menu, container, false);
+        ConstraintLayout fragmentMenu = (ConstraintLayout) inflater.inflate(R.layout.fragment_menu_v2, container, false);
 
-        start = (TextView) rl.findViewById(R.id.start);
-        ranking = (TextView) rl.findViewById(R.id.ranking);
+        start = (TextView) fragmentMenu.findViewById(R.id.start);
+        ranking = (TextView) fragmentMenu.findViewById(R.id.ranking);
 
         start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -61,6 +62,6 @@ public class FragmentMenu extends Fragment {
         });
 
 
-        return rl;
+        return fragmentMenu;
     }
 }
