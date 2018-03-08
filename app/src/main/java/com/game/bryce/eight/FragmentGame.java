@@ -219,7 +219,7 @@ public class FragmentGame extends Fragment {
         RelativeLayout.LayoutParams par = (RelativeLayout.LayoutParams) img.getLayoutParams();
         // image1.setImageResource(R.drawable.image2);
         float d = getResources().getDisplayMetrics().density;
-        //get parent density and transform dip to pix
+        //get parent density and transform dp to pix
         par.topMargin = (int) (TMar(pos) * d);
         par.leftMargin = (int) (LMar(pos) * d);
 

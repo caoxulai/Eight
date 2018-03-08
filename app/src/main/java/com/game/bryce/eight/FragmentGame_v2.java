@@ -1,9 +1,5 @@
 package com.game.bryce.eight;
 
-import util.Ranking;
-import util.Record;
-
-
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -17,6 +13,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.constraint.ConstraintLayout;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +27,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static java.lang.String.*;
+import util.Ranking;
+import util.Record;
+
+import static android.util.TypedValue.COMPLEX_UNIT_PX;
+import static java.lang.String.format;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -43,13 +44,14 @@ public class FragmentGame_v2 extends Fragment {
     private int[] order;
 
     // declare all the components
+    private ConstraintLayout numberBoard;
     private ImageView[] imageView;
     private int[] images = {R.drawable.one, R.drawable.two, R.drawable.three,
             R.drawable.four, R.drawable.five, R.drawable.six,
             R.drawable.seven, R.drawable.eight, R.drawable.transparent};
 
     private TextView textSteps;
-
+    private ImageView resetButton;
     // for Timer
     private TextView timerValue;
     private long startTime = 0L;
@@ -101,7 +103,16 @@ public class FragmentGame_v2 extends Fragment {
         imageView[7] = (ImageView) fragmentGame.findViewById(R.id.image8);
         imageView[8] = (ImageView) fragmentGame.findViewById(R.id.vacancy);
 
+        numberBoard = (ConstraintLayout) fragmentGame.findViewById(R.id.numberBoard);
+        resetButton = (ImageView) fragmentGame.findViewById(R.id.reset);
+
+
+        resizeComponents();
+
+
         for (int i = 0; i < order.length; i++) {
+
+
             final int finalI = i;
             imageView[finalI].setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -115,7 +126,6 @@ public class FragmentGame_v2 extends Fragment {
             });
         }
 
-        ImageView resetButton = (ImageView) fragmentGame.findViewById(R.id.reset);
         resetButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 restart();
@@ -126,6 +136,35 @@ public class FragmentGame_v2 extends Fragment {
 
         return fragmentGame;
     }
+
+    private void resizeComponents() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int deviceHeight = Math.round(displayMetrics.heightPixels / displayMetrics.density);
+        int deviceWidth = Math.round(displayMetrics.widthPixels / displayMetrics.density);
+        float scale = Math.min((deviceHeight * 6 / 10 + 60) * 10 / 11, deviceWidth * 3 / 4 + 30) / (float) 300;
+
+        adjustViewSize(numberBoard, scale);
+        for (int i = 0; i < order.length; i++) {
+            adjustViewSize(imageView[i], scale);
+        }
+        adjustViewSize(resetButton, scale);
+        adjustTextSize(textSteps, scale);
+        adjustTextSize(timerValue, scale);
+    }
+
+    private void adjustTextSize(TextView textView, float scale) {
+        textView.setTextSize(COMPLEX_UNIT_PX, textView.getTextSize() * scale);
+    }
+
+
+    private void adjustViewSize(View view, float scale) {
+        ViewGroup.LayoutParams par = view.getLayoutParams();
+        par.width *= scale;
+        par.height *= scale;
+
+        view.setLayoutParams(par);
+    }
+
 
     private int getVacancy() {
         for (int i = 0; i < order.length; i++) {

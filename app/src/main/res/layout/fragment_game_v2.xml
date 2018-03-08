@@ -37,7 +37,7 @@
     <ImageView
         android:id="@+id/reset"
         android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_height="0dp"
         android:layout_alignBottom="@+id/textSteps"
         android:layout_alignLeft="@+id/textSteps"
         android:layout_marginBottom="8dp"
@@ -45,6 +45,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/restart"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toBottomOf="@+id/textSteps"
         app:layout_constraintEnd_toEndOf="@+id/numberBoard"
         app:layout_constraintHorizontal_bias="0.682"
@@ -55,12 +56,13 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/numberBoard"
         android:layout_width="300dp"
-        android:layout_height="320dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
 
+        app:layout_constraintDimensionRatio="H, 10:11"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

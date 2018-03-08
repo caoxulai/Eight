@@ -12,6 +12,8 @@ A fun android game to play, developed in Android Studio.
 - [x] fragment_menu v2
 - [x] fragment_ranking v2
 - [ ] resize all elements when starting the application (based on the screen size)
+- [ ] Create Resizer class
+- [ ] Bug: rotate screen switched back to the menu fragment
 - [ ] alert_top5 v2
 - [ ] alert_finish v2
 - [ ] alert_reset_ranking v2
