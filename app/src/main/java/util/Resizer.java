@@ -1,5 +1,6 @@
 package util;
 
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,7 +28,13 @@ public class Resizer {
         ViewGroup.LayoutParams par = view.getLayoutParams();
         par.width *= scale;
         par.height *= scale;
+        view.setLayoutParams(par);
+    }
 
+    public static void set(View view, int canvasHeight, int canvasWidth) {
+        ViewGroup.LayoutParams par = view.getLayoutParams();
+        par.width = canvasWidth;
+        par.height = canvasHeight;
         view.setLayoutParams(par);
     }
 }

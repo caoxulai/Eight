@@ -44,6 +44,7 @@ public class FragmentGame_v2 extends Fragment {
     private int[] order;
 
     // declare all the components
+    private ConstraintLayout canvas;
     private ConstraintLayout numberBoard;
     private ImageView[] imageView;
     private int[] images = {R.drawable.one, R.drawable.two, R.drawable.three,
@@ -87,6 +88,8 @@ public class FragmentGame_v2 extends Fragment {
         ranking = new Ranking(sharedpreferences);
 
         ConstraintLayout fragmentGame = (ConstraintLayout) inflater.inflate(R.layout.fragment_game_v2, container, false);
+
+        canvas = (ConstraintLayout) fragmentGame.findViewById(R.id.canvas);
 
         textSteps = (TextView) fragmentGame.findViewById(R.id.textSteps);
         timerValue = (TextView) fragmentGame.findViewById(R.id.timerValue);
@@ -139,9 +142,13 @@ public class FragmentGame_v2 extends Fragment {
 
     private void resizeComponents() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int deviceHeight = Math.round(displayMetrics.heightPixels / displayMetrics.density);
-        int deviceWidth = Math.round(displayMetrics.widthPixels / displayMetrics.density);
-        float scale = Math.min(Math.min((deviceHeight * 6 / 10 + 60), deviceHeight * 7 / 10) * 10 / 11, deviceWidth * 3 / 4 + 30) / (float) 300;
+        int deviceHeight = displayMetrics.heightPixels;
+        int deviceWidth = displayMetrics.widthPixels;
+        int canvasHeight = deviceHeight * 4/5;
+        int canvasWidth = deviceWidth * 5/6;
+        Resizer.set(canvas, canvasHeight, canvasWidth);
+
+        float scale = Math.min(canvasHeight * 7 / 10, canvasWidth) / (300 * displayMetrics.density);
 
         Resizer resizer = new Resizer(scale);
         resizer.adjust(numberBoard);
