@@ -29,8 +29,8 @@ import java.util.List;
 
 import util.Ranking;
 import util.Record;
+import util.Resizer;
 
-import static android.util.TypedValue.COMPLEX_UNIT_PX;
 import static java.lang.String.format;
 
 /**
@@ -141,28 +141,16 @@ public class FragmentGame_v2 extends Fragment {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int deviceHeight = Math.round(displayMetrics.heightPixels / displayMetrics.density);
         int deviceWidth = Math.round(displayMetrics.widthPixels / displayMetrics.density);
-        float scale = Math.min((deviceHeight * 6 / 10 + 60) * 10 / 11, deviceWidth * 3 / 4 + 30) / (float) 300;
+        float scale = Math.min(Math.min((deviceHeight * 6 / 10 + 60), deviceHeight * 7 / 10) * 10 / 11, deviceWidth * 3 / 4 + 30) / (float) 300;
 
-        adjustViewSize(numberBoard, scale);
+        Resizer resizer = new Resizer(scale);
+        resizer.adjust(numberBoard);
         for (int i = 0; i < order.length; i++) {
-            adjustViewSize(imageView[i], scale);
+            resizer.adjust(imageView[i]);
         }
-        adjustViewSize(resetButton, scale);
-        adjustTextSize(textSteps, scale);
-        adjustTextSize(timerValue, scale);
-    }
-
-    private void adjustTextSize(TextView textView, float scale) {
-        textView.setTextSize(COMPLEX_UNIT_PX, textView.getTextSize() * scale);
-    }
-
-
-    private void adjustViewSize(View view, float scale) {
-        ViewGroup.LayoutParams par = view.getLayoutParams();
-        par.width *= scale;
-        par.height *= scale;
-
-        view.setLayoutParams(par);
+        resizer.adjust(resetButton);
+        resizer.adjust(textSteps);
+        resizer.adjust(timerValue);
     }
 
 
