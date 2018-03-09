@@ -7,6 +7,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import util.Resizer;
 
 public class SplashScreen extends Activity {
 
@@ -17,7 +22,7 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen_v2);
-
+        resizeComponents();
         new Handler().postDelayed(new Runnable() {
 
             /*
@@ -38,4 +43,20 @@ public class SplashScreen extends Activity {
         }, SPLASH_TIME_OUT);
     }
 
+    private void resizeComponents() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int deviceHeight = displayMetrics.heightPixels;
+        int deviceWidth = displayMetrics.widthPixels;
+
+        float scale = (float) (Math.sqrt(deviceHeight / 592 * deviceWidth / 360) / displayMetrics.density);
+
+
+        ImageView imgLogo = (ImageView) findViewById(R.id.imgLogo);
+        TextView author = (TextView) findViewById(R.id.author);
+        TextView message = (TextView) findViewById(R.id.message);
+        Resizer resizer = new Resizer(scale);
+        resizer.adjust(imgLogo);
+        resizer.adjust(author);
+        resizer.adjust(message);
+    }
 }
