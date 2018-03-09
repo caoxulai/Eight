@@ -4,13 +4,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-
 import android.support.constraint.ConstraintLayout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import util.Resizer;
@@ -20,17 +18,16 @@ import util.Resizer;
  */
 public class FragmentMenu extends Fragment {
 
-    private static TextView start;
-    private static TextView ranking;
+    private static ConstraintLayout fragmentMenu;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
-        ConstraintLayout fragmentMenu = (ConstraintLayout) inflater.inflate(R.layout.fragment_menu_v2, container, false);
+        fragmentMenu = (ConstraintLayout) inflater.inflate(R.layout.fragment_menu_v2, container, false);
 
-        start = (TextView) fragmentMenu.findViewById(R.id.start);
-        ranking = (TextView) fragmentMenu.findViewById(R.id.ranking);
+        TextView start = (TextView) fragmentMenu.findViewById(R.id.start);
+        TextView ranking = (TextView) fragmentMenu.findViewById(R.id.ranking);
 
         resizeComponents();
 
@@ -75,10 +72,9 @@ public class FragmentMenu extends Fragment {
         int deviceHeight = displayMetrics.heightPixels;
         int deviceWidth = displayMetrics.widthPixels;
 
-        float scale = (float) (Math.sqrt(deviceHeight / 592 * deviceWidth / 360) / displayMetrics.density);
+        float scale = (float) Math.sqrt(Math.sqrt(deviceHeight / 592 * deviceWidth / 360) / displayMetrics.density);
 
         Resizer resizer = new Resizer(scale);
-        resizer.adjust(start);
-        resizer.adjust(ranking);
+        resizer.adjustAll(fragmentMenu);
     }
 }

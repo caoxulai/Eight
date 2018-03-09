@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,13 +51,7 @@ public class SplashScreen extends Activity {
 
         float scale = (float) (Math.sqrt(deviceHeight / 592 * deviceWidth / 360) / displayMetrics.density);
 
-
-        ImageView imgLogo = (ImageView) findViewById(R.id.imgLogo);
-        TextView author = (TextView) findViewById(R.id.author);
-        TextView message = (TextView) findViewById(R.id.message);
         Resizer resizer = new Resizer(scale);
-        resizer.adjust(imgLogo);
-        resizer.adjust(author);
-        resizer.adjust(message);
+        resizer.adjustAll((ViewGroup) findViewById(R.id.splashScreen));
     }
 }
