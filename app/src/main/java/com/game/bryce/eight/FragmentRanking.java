@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,7 +62,7 @@ public class FragmentRanking extends Fragment {
         step[4] = (TextView) fragmentRanking.findViewById(R.id.step5);
         time[4] = (TextView) fragmentRanking.findViewById(R.id.time5);
 
-        new_game = (TextView) fragmentRanking.findViewById(R.id.new_game);
+        new_game = (TextView) fragmentRanking.findViewById(R.id.newGame);
 
 
         resetButton = (ImageView) fragmentRanking.findViewById(R.id.reset);

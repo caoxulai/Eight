@@ -21,6 +21,7 @@ public class Resizer {
 
     public void adjust(TextView textView) {
         textView.setTextSize(COMPLEX_UNIT_PX, textView.getTextSize() * scale);
+        adjust((View)textView);
     }
 
 

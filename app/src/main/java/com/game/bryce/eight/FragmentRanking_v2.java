@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +21,20 @@ import android.widget.Toast;
 
 import util.Ranking;
 import util.Record;
+import util.Resizer;
 
 /**
  * Created by nathan on 7/9/2015.
  */
 public class FragmentRanking_v2 extends Fragment {
 
+    private ConstraintLayout canvas;
+    private ConstraintLayout rankingBoard;
+    private static TextView[] rank = new TextView[5];
     private static TextView[] name = new TextView[5];
     private static TextView[] step = new TextView[5];
     private static TextView[] time = new TextView[5];
+    private static TextView rankingTitle;
     private static TextView newGame;
 
     private static ImageView resetButton;
@@ -46,31 +52,41 @@ public class FragmentRanking_v2 extends Fragment {
         ranking = new Ranking(sharedpreferences);
 
         ConstraintLayout fragmentRanking = (ConstraintLayout) inflater.inflate(R.layout.fragment_ranking_v2, container, false);
+        canvas = (ConstraintLayout) fragmentRanking.findViewById(R.id.canvas);
+        rankingTitle = (TextView) fragmentRanking.findViewById(R.id.rankingTitle);
+        resetButton = (ImageView) fragmentRanking.findViewById(R.id.reset);
 
+        rankingBoard = (ConstraintLayout) fragmentRanking.findViewById(R.id.rankingBoard);
+
+        rank[0] = (TextView) fragmentRanking.findViewById(R.id.rank1);
         name[0] = (TextView) fragmentRanking.findViewById(R.id.name1);
         step[0] = (TextView) fragmentRanking.findViewById(R.id.step1);
         time[0] = (TextView) fragmentRanking.findViewById(R.id.time1);
 
+        rank[1] = (TextView) fragmentRanking.findViewById(R.id.rank2);
         name[1] = (TextView) fragmentRanking.findViewById(R.id.name2);
         step[1] = (TextView) fragmentRanking.findViewById(R.id.step2);
         time[1] = (TextView) fragmentRanking.findViewById(R.id.time2);
 
+        rank[2] = (TextView) fragmentRanking.findViewById(R.id.rank3);
         name[2] = (TextView) fragmentRanking.findViewById(R.id.name3);
         step[2] = (TextView) fragmentRanking.findViewById(R.id.step3);
         time[2] = (TextView) fragmentRanking.findViewById(R.id.time3);
 
+        rank[3] = (TextView) fragmentRanking.findViewById(R.id.rank4);
         name[3] = (TextView) fragmentRanking.findViewById(R.id.name4);
         step[3] = (TextView) fragmentRanking.findViewById(R.id.step4);
         time[3] = (TextView) fragmentRanking.findViewById(R.id.time4);
 
+        rank[4] = (TextView) fragmentRanking.findViewById(R.id.rank5);
         name[4] = (TextView) fragmentRanking.findViewById(R.id.name5);
         step[4] = (TextView) fragmentRanking.findViewById(R.id.step5);
         time[4] = (TextView) fragmentRanking.findViewById(R.id.time5);
 
-        newGame = (TextView) fragmentRanking.findViewById(R.id.new_game);
+        newGame = (TextView) fragmentRanking.findViewById(R.id.newGame);
 
-        resetButton = (ImageView) fragmentRanking.findViewById(R.id.reset);
 
+        resizeComponents();
         publishRanking();
 
         Bundle bundle = this.getArguments();
@@ -129,6 +145,29 @@ public class FragmentRanking_v2 extends Fragment {
         return fragmentRanking;
     }
 
+    private void resizeComponents() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int deviceHeight = displayMetrics.heightPixels;
+        int deviceWidth = displayMetrics.widthPixels;
+        int canvasHeight = deviceHeight * 4 / 5;
+        int canvasWidth = deviceWidth * 5 / 6;
+        Resizer.set(canvas, canvasHeight, canvasWidth);
+
+        float scale = Math.min(canvasHeight * 6 / 10, canvasWidth) / (300 * displayMetrics.density);
+
+        Resizer resizer = new Resizer(scale);
+        resizer.adjust(rankingTitle);
+        resizer.adjust(resetButton);
+        resizer.adjust(rankingBoard);
+        for (int i = 0; i < 5; i++) {
+            resizer.adjust(rank[i]);
+            resizer.adjust(name[i]);
+            resizer.adjust(step[i]);
+            resizer.adjust(time[i]);
+        }
+        resizer.adjust(newGame);
+    }
+
     private void resetRanking() {
         ranking.clear();
         publishRanking();
@@ -139,16 +178,15 @@ public class FragmentRanking_v2 extends Fragment {
 
     private void publishRanking() {
         Record[] tops = ranking.getTops();
-        for(int i=0; i<tops.length; i++){
-            if(tops[i] != null) {
+        for (int i = 0; i < tops.length; i++) {
+            if (tops[i] != null) {
                 name[i].setText(tops[i].getName());
                 time[i].setText(tops[i].getTimeString());
                 step[i].setText(tops[i].getStepsString());
-            }
-            else{
+            } else {
                 name[i].setText("----");
-                time[i].setText("--");
-                step[i].setText("--:--.--");
+                time[i].setText("--:--.--");
+                step[i].setText("--");
             }
         }
     }

@@ -91,9 +91,11 @@ public class FragmentGame_v2 extends Fragment {
 
         canvas = (ConstraintLayout) fragmentGame.findViewById(R.id.canvas);
 
+        resetButton = (ImageView) fragmentGame.findViewById(R.id.reset);
         textSteps = (TextView) fragmentGame.findViewById(R.id.textSteps);
         timerValue = (TextView) fragmentGame.findViewById(R.id.timerValue);
 
+        numberBoard = (ConstraintLayout) fragmentGame.findViewById(R.id.numberBoard);
         order = new int[9];
         imageView = new ImageView[9];
         imageView[0] = (ImageView) fragmentGame.findViewById(R.id.image1);
@@ -106,8 +108,6 @@ public class FragmentGame_v2 extends Fragment {
         imageView[7] = (ImageView) fragmentGame.findViewById(R.id.image8);
         imageView[8] = (ImageView) fragmentGame.findViewById(R.id.vacancy);
 
-        numberBoard = (ConstraintLayout) fragmentGame.findViewById(R.id.numberBoard);
-        resetButton = (ImageView) fragmentGame.findViewById(R.id.reset);
 
 
         resizeComponents();

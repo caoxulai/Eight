@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/ranking"
+        android:id="@+id/rankingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -198,7 +198,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="New Game"
-        android:id="@+id/new_game"
+        android:id="@+id/newGame"
         android:layout_marginTop="61dp"
         android:textColor="@color/material_blue_grey_800"
         android:textSize="18dp"
