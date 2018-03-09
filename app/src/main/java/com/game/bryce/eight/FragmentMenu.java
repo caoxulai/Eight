@@ -6,11 +6,14 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import android.support.constraint.ConstraintLayout;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import util.Resizer;
 
 /**
  * Created by Xulai on 2015/6/21.
@@ -28,6 +31,8 @@ public class FragmentMenu extends Fragment {
 
         start = (TextView) fragmentMenu.findViewById(R.id.start);
         ranking = (TextView) fragmentMenu.findViewById(R.id.ranking);
+
+        resizeComponents();
 
         start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -63,5 +68,17 @@ public class FragmentMenu extends Fragment {
 
 
         return fragmentMenu;
+    }
+
+    private void resizeComponents() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int deviceHeight = displayMetrics.heightPixels;
+        int deviceWidth = displayMetrics.widthPixels;
+
+        float scale = (float) (Math.sqrt(deviceHeight / 592 * deviceWidth / 360) / displayMetrics.density);
+
+        Resizer resizer = new Resizer(scale);
+        resizer.adjust(start);
+        resizer.adjust(ranking);
     }
 }
