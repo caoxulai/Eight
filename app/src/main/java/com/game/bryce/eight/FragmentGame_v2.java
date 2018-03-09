@@ -277,7 +277,7 @@ public class FragmentGame_v2 extends Fragment {
                 ////////Pop out an alert dialog///////
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater li = LayoutInflater.from(getActivity());
-                View alertFinish = li.inflate(R.layout.alert_finish, null);
+                View alertFinish = li.inflate(R.layout.alert_finish_v2, null);
                 builder.setView(alertFinish);
 
                 final TextView stepsValue = (TextView) alertFinish.findViewById(R.id.steps);
