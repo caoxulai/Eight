@@ -19,7 +19,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.15" />
@@ -29,8 +29,8 @@
         android:id="@+id/timelabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/stepslabel"
-        android:layout_below="@+id/stepslabel"
+        android:layout_alignLeft="@+id/stepsLabel"
+        android:layout_below="@+id/stepsLabel"
         android:text="Time:"
         android:textAppearance="?android:attr/textAppearanceMedium"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,7 +59,7 @@
         app:layout_constraintVertical_bias="0.5" />
 
     <TextView
-        android:id="@+id/stepslabel"
+        android:id="@+id/stepsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
@@ -76,15 +76,15 @@
         android:id="@+id/steps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/stepslabel"
+        android:layout_alignTop="@+id/stepsLabel"
         android:gravity="center"
         android:text="88"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        app:layout_constraintBottom_toBottomOf="@+id/stepslabel"
+        app:layout_constraintBottom_toBottomOf="@+id/stepsLabel"
         app:layout_constraintEnd_toEndOf="@+id/time"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/time"
-        app:layout_constraintTop_toTopOf="@+id/stepslabel"
+        app:layout_constraintTop_toTopOf="@+id/stepsLabel"
         app:layout_constraintVertical_bias="0.5" />
 
 </android.support.constraint.ConstraintLayout>

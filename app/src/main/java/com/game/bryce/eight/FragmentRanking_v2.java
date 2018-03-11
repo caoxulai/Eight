@@ -109,7 +109,7 @@ public class FragmentRanking_v2 extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
                 LayoutInflater li = LayoutInflater.from(getActivity());
-                View alert_reset_ranking = li.inflate(R.layout.alert_reset_ranking, null);
+                View alert_reset_ranking = li.inflate(R.layout.alert_reset_ranking_v2, null);
 
                 resizer.adjustAll((ViewGroup) alert_reset_ranking);
                 builder.setView(alert_reset_ranking);
