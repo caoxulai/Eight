@@ -39,6 +39,9 @@ public class FragmentRanking_v2 extends Fragment {
 
     private static ImageView resetButton;
 
+    // declare a resizer
+    private Resizer resizer;
+
     // Declare SharedPreferences
     public static final String MyPREFERENCES = "rankings";
     SharedPreferences sharedpreferences;
@@ -85,8 +88,8 @@ public class FragmentRanking_v2 extends Fragment {
 
         newGame = (TextView) fragmentRanking.findViewById(R.id.newGame);
 
-
-        resizeComponents();
+        resizer = initializeResizer();
+        resizer.adjustAll(canvas);
         publishRanking();
 
         Bundle bundle = this.getArguments();
@@ -108,7 +111,7 @@ public class FragmentRanking_v2 extends Fragment {
                 LayoutInflater li = LayoutInflater.from(getActivity());
                 View alert_reset_ranking = li.inflate(R.layout.alert_reset_ranking, null);
 
-                resizeAlert((ViewGroup) alert_reset_ranking);
+                resizer.adjustAll((ViewGroup) alert_reset_ranking);
                 builder.setView(alert_reset_ranking);
 
                 builder.setPositiveButton("Yes",
@@ -147,32 +150,8 @@ public class FragmentRanking_v2 extends Fragment {
         return fragmentRanking;
     }
 
-//    private void resizeAlert(ViewGroup alert) {
-//        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-//        int deviceHeight = displayMetrics.heightPixels;
-//        int deviceWidth = displayMetrics.widthPixels;
-//
-//        float scale1 = (float) Math.sqrt(Math.sqrt(deviceHeight / 592 * deviceWidth / 360) / displayMetrics.density);
-//        float scale2 = Math.min(deviceHeight / 592, deviceWidth / 360) / displayMetrics.density;
-//        float scale = (2*scale1 + scale2) / 3;
-//
-//        Resizer resizer = new Resizer(scale);
-//        resizer.adjustAll(alert);
-//    }
-    private void resizeAlert(ViewGroup alert) {
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int deviceHeight = displayMetrics.heightPixels;
-        int deviceWidth = displayMetrics.widthPixels;
-        int canvasHeight = deviceHeight * 4 / 5;
-        int canvasWidth = deviceWidth * 5 / 6;
 
-        float scale = Math.min(canvasHeight * 6 / 10, canvasWidth) / (300 * displayMetrics.density);
-
-        Resizer resizer = new Resizer(scale);
-        resizer.adjustAll(alert);
-    }
-
-    private void resizeComponents() {
+    private Resizer initializeResizer() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int deviceHeight = displayMetrics.heightPixels;
         int deviceWidth = displayMetrics.widthPixels;
@@ -182,19 +161,9 @@ public class FragmentRanking_v2 extends Fragment {
 
         float scale = Math.min(canvasHeight * 6 / 10, canvasWidth) / (300 * displayMetrics.density);
 
-        Resizer resizer = new Resizer(scale);
-        resizer.adjustAll(canvas);
-//        resizer.adjust(rankingTitle);
-//        resizer.adjust(resetButton);
-//        resizer.adjust(rankingBoard);
-//        for (int i = 0; i < 5; i++) {
-//            resizer.adjust(rank[i]);
-//            resizer.adjust(name[i]);
-//            resizer.adjust(step[i]);
-//            resizer.adjust(time[i]);
-//        }
-//        resizer.adjust(newGame);
+        return new Resizer(scale);
     }
+
 
     private void resetRanking() {
         ranking.clear();

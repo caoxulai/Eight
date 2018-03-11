@@ -53,6 +53,11 @@ public class FragmentGame_v2 extends Fragment {
 
     private TextView textSteps;
     private ImageView resetButton;
+
+    // declare a resizer
+    private Resizer resizer;
+
+
     // for Timer
     private TextView timerValue;
     private long startTime = 0L;
@@ -108,9 +113,8 @@ public class FragmentGame_v2 extends Fragment {
         imageView[7] = (ImageView) fragmentGame.findViewById(R.id.image8);
         imageView[8] = (ImageView) fragmentGame.findViewById(R.id.vacancy);
 
-
-
-        resizeComponents();
+        resizer = initializeResizer();
+        resizer.adjustAll(canvas);
 
         for (int i = 0; i < order.length; i++) {
 
@@ -139,34 +143,7 @@ public class FragmentGame_v2 extends Fragment {
         return fragmentGame;
     }
 
-//    private void resizeAlert(ViewGroup alert) {
-//        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-//        int deviceHeight = displayMetrics.heightPixels;
-//        int deviceWidth = displayMetrics.widthPixels;
-//
-//        float scale1 = (float) Math.sqrt(Math.sqrt(deviceHeight / 592 * deviceWidth / 360) / displayMetrics.density);
-//        float scale2 = Math.min(deviceHeight / 592, deviceWidth / 360) / displayMetrics.density;
-//        float scale = (2*scale1 + scale2) / 3;
-//
-//        Resizer resizer = new Resizer(scale);
-//        resizer.adjustAll(alert);
-//    }
-
-    private void resizeAlert(ViewGroup alert) {
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int deviceHeight = displayMetrics.heightPixels;
-        int deviceWidth = displayMetrics.widthPixels;
-        int canvasHeight = deviceHeight * 4/5;
-        int canvasWidth = deviceWidth * 5/6;
-
-        float scale = Math.min(canvasHeight * 7 / 10, canvasWidth) / (300 * displayMetrics.density);
-
-        Resizer resizer = new Resizer(scale);
-        resizer.adjustAll(alert);
-    }
-
-
-    private void resizeComponents() {
+    private Resizer initializeResizer() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int deviceHeight = displayMetrics.heightPixels;
         int deviceWidth = displayMetrics.widthPixels;
@@ -176,33 +153,8 @@ public class FragmentGame_v2 extends Fragment {
 
         float scale = Math.min(canvasHeight * 7 / 10, canvasWidth) / (300 * displayMetrics.density);
 
-        Resizer resizer = new Resizer(scale);
-        resizer.adjustAll(canvas);
-
-
-//
-//        int count = canvas.getChildCount();
-//        for (int i = 0; i < count; i++) {
-//            View view = canvas.getChildAt(i);
-//            if (view instanceof TextView)
-//                resizer.adjust((TextView) view);
-//            else {
-//                resizer.adjust(view);
-//            }
-//        }
-
-//
-//
-//
-//        resizer.adjust(numberBoard);
-//        for (int i = 0; i < order.length; i++) {
-//            resizer.adjust(imageView[i]);
-//        }
-//        resizer.adjust(resetButton);
-//        resizer.adjust(textSteps);
-//        resizer.adjust(timerValue);
+        return new Resizer(scale);
     }
-
 
 
     private int getVacancy() {
@@ -272,7 +224,7 @@ public class FragmentGame_v2 extends Fragment {
 
                 LayoutInflater li = LayoutInflater.from(getActivity());
                 View alertTop5 = li.inflate(R.layout.alert_top5, null);
-                resizeAlert((ViewGroup) alertTop5);
+                resizer.adjustAll((ViewGroup) alertTop5);
                 builder.setView(alertTop5);
 
                 final TextView rankValue = (TextView) alertTop5.findViewById(R.id.rank);
@@ -323,7 +275,7 @@ public class FragmentGame_v2 extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater li = LayoutInflater.from(getActivity());
                 View alertFinish = li.inflate(R.layout.alert_finish_v2, null);
-                resizeAlert((ViewGroup) alertFinish);
+                resizer.adjustAll((ViewGroup) alertFinish);
                 builder.setView(alertFinish);
 
                 final TextView stepsValue = (TextView) alertFinish.findViewById(R.id.steps);
