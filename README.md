@@ -18,6 +18,7 @@ A fun android game to play, developed in Android Studio.
 - [x] Create a new container in rank layout to make sure all components are at the center
 - [x] resize all elements in menu layout when starting the fragment (based on the screen size)
 - [ ] Bug: rotate screen switched back to the menu fragment
+- [ ] Set Name length Limit as 8
 - [ ] alert_top5 v2
 - [ ] resize all elements in alert_top5 layout when starting the fragment (based on the screen size)
 - [ ] alert_finish v2
