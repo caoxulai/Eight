@@ -19,12 +19,12 @@ A fun android game to play, developed in Android Studio.
 - [x] resize all elements in menu layout when starting the fragment (based on the screen size)
 - [ ] Bug: rotate screen switched back to the menu fragment
 - [ ] Set Name length Limit as 8
-- [ ] alert_top5 v2
-- [ ] resize all elements in alert_top5 layout when starting the fragment (based on the screen size)
-- [ ] alert_finish v2
-- [ ] resize all elements in alert_finish layout when starting the fragment (based on the screen size)
-- [ ] alert_reset_ranking v2
-- [ ] resize all elements in alert_reset_ranking layout when starting the fragment (based on the screen size)
+- [x] alert_top5 v2
+- [x] resize all elements in alert_top5 layout when starting the fragment (based on the screen size)
+- [x] alert_finish v2
+- [x] resize all elements in alert_finish layout when starting the fragment (based on the screen size)
+- [x] alert_reset_ranking v2
+- [x] resize all elements in alert_reset_ranking layout when starting the fragment (based on the screen size)
 - [x] rank by time instead of steps
 - [ ] support 4*4
 - [ ] support 5*5

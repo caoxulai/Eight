@@ -223,7 +223,7 @@ public class FragmentGame_v2 extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
                 LayoutInflater li = LayoutInflater.from(getActivity());
-                View alertTop5 = li.inflate(R.layout.alert_top5, null);
+                View alertTop5 = li.inflate(R.layout.alert_top5_v2, null);
                 resizer.adjustAll((ViewGroup) alertTop5);
                 builder.setView(alertTop5);
 

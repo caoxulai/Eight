@@ -1,9 +1,5 @@
 package util;
 
-import android.app.Fragment;
-import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,7 +17,7 @@ public class Resizer {
 
     private float scale;
 
-    public Resizer(float scale){
+    public Resizer(float scale) {
         this.scale = scale;
     }
 
@@ -47,10 +43,10 @@ public class Resizer {
     public void adjustAll(ViewGroup layout) {
         Queue<View> queue = new LinkedList<>();
         queue.offer(layout);
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             View view = queue.poll();
-            if (view instanceof ViewGroup){
-                if(!view.equals(layout))
+            if (view instanceof ViewGroup) {
+                if (!view.equals(layout))
                     adjust(view);
                 ViewGroup viewGroup = (ViewGroup) view;
                 int count = viewGroup.getChildCount();
@@ -58,23 +54,11 @@ public class Resizer {
                     View child = viewGroup.getChildAt(i);
                     queue.offer(child);
                 }
-            }else if (view instanceof TextView)
+            } else if (view instanceof TextView)
                 adjust((TextView) view);
             else {
                 adjust(view);
             }
         }
     }
-
-    public static void resizeAlert(ViewGroup alert, Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int deviceHeight = displayMetrics.heightPixels;
-        int deviceWidth = displayMetrics.widthPixels;
-
-        float scale = (float) (Math.sqrt(deviceHeight / 592 * deviceWidth / 360) / displayMetrics.density);
-
-        Resizer resizer = new Resizer(scale);
-        resizer.adjustAll(alert);
-    }
-
 }
