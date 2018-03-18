@@ -23,6 +23,8 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen_v2);
+        TextView version = (TextView) findViewById(R.id.version);
+        version.setText("version " + getResources().getString(R.string.app_version));
         resizeComponents();
         new Handler().postDelayed(new Runnable() {
 
