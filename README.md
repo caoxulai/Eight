@@ -11,13 +11,23 @@ A fun android game to play, developed in Android Studio.
 - [x] clean up the code in fragment_game_v2.java
 - [x] fragment_menu v2
 - [x] fragment_ranking v2
-- [ ] resize all elements when starting the application (based on the screen size)
-- [ ] Create Resizer class
-- [ ] Bug: rotate screen switched back to the menu fragment
-- [ ] alert_top5 v2
-- [ ] alert_finish v2
-- [ ] alert_reset_ranking v2
+- [x] resize all elements when starting the application (based on the screen size)
+- [x] Create Resizer class
+- [x] Create a new container in game layout to make sure all components are at the center
+- [x] resize all elements in rank layout when starting the fragment (based on the screen size)
+- [x] Create a new container in rank layout to make sure all components are at the center
+- [x] resize all elements in menu layout when starting the fragment (based on the screen size)
+- [x] Bug: rotate screen switched back to the menu fragment
+- [x] Set Name length Limit as 8
+- [x] alert_top5 v2
+- [x] resize all elements in alert_top5 layout when starting the fragment (based on the screen size)
+- [x] alert_finish v2
+- [x] resize all elements in alert_finish layout when starting the fragment (based on the screen size)
+- [x] alert_reset_ranking v2
+- [x] resize all elements in alert_reset_ranking layout when starting the fragment (based on the screen size)
 - [x] rank by time instead of steps
+- [ ] display Personal Best in the game fragment
 - [ ] support 4*4
 - [ ] support 5*5
+- [ ] Support landscape screen orientation
 - [ ] support screen rotate

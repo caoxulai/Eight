@@ -37,7 +37,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/stepslabel"
+        android:id="@+id/stepsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ranklabel"
@@ -50,7 +50,7 @@
         android:id="@+id/steps"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/stepslabel"
+        android:layout_alignTop="@+id/stepsLabel"
         android:layout_marginLeft="175dp"
         android:gravity="center"
         android:text="88"
@@ -60,8 +60,8 @@
         android:id="@+id/timelabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/stepslabel"
-        android:layout_below="@+id/stepslabel"
+        android:layout_alignLeft="@+id/stepsLabel"
+        android:layout_below="@+id/stepsLabel"
         android:layout_marginTop="10dp"
         android:text="Time:"
         android:textAppearance="?android:attr/textAppearanceMedium" />

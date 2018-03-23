@@ -29,8 +29,8 @@ import java.util.List;
 
 import util.Ranking;
 import util.Record;
+import util.Resizer;
 
-import static android.util.TypedValue.COMPLEX_UNIT_PX;
 import static java.lang.String.format;
 
 /**
@@ -44,6 +44,7 @@ public class FragmentGame_v2 extends Fragment {
     private int[] order;
 
     // declare all the components
+    private ConstraintLayout canvas;
     private ConstraintLayout numberBoard;
     private ImageView[] imageView;
     private int[] images = {R.drawable.one, R.drawable.two, R.drawable.three,
@@ -52,6 +53,11 @@ public class FragmentGame_v2 extends Fragment {
 
     private TextView textSteps;
     private ImageView resetButton;
+
+    // declare a resizer
+    private Resizer resizer;
+
+
     // for Timer
     private TextView timerValue;
     private long startTime = 0L;
@@ -88,9 +94,13 @@ public class FragmentGame_v2 extends Fragment {
 
         ConstraintLayout fragmentGame = (ConstraintLayout) inflater.inflate(R.layout.fragment_game_v2, container, false);
 
+        canvas = (ConstraintLayout) fragmentGame.findViewById(R.id.canvas);
+
+        resetButton = (ImageView) fragmentGame.findViewById(R.id.reset);
         textSteps = (TextView) fragmentGame.findViewById(R.id.textSteps);
         timerValue = (TextView) fragmentGame.findViewById(R.id.timerValue);
 
+        numberBoard = (ConstraintLayout) fragmentGame.findViewById(R.id.numberBoard);
         order = new int[9];
         imageView = new ImageView[9];
         imageView[0] = (ImageView) fragmentGame.findViewById(R.id.image1);
@@ -103,12 +113,8 @@ public class FragmentGame_v2 extends Fragment {
         imageView[7] = (ImageView) fragmentGame.findViewById(R.id.image8);
         imageView[8] = (ImageView) fragmentGame.findViewById(R.id.vacancy);
 
-        numberBoard = (ConstraintLayout) fragmentGame.findViewById(R.id.numberBoard);
-        resetButton = (ImageView) fragmentGame.findViewById(R.id.reset);
-
-
-        resizeComponents();
-
+        resizer = initializeResizer();
+        resizer.adjustAll(canvas);
 
         for (int i = 0; i < order.length; i++) {
 
@@ -137,32 +143,17 @@ public class FragmentGame_v2 extends Fragment {
         return fragmentGame;
     }
 
-    private void resizeComponents() {
+    private Resizer initializeResizer() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int deviceHeight = Math.round(displayMetrics.heightPixels / displayMetrics.density);
-        int deviceWidth = Math.round(displayMetrics.widthPixels / displayMetrics.density);
-        float scale = Math.min((deviceHeight * 6 / 10 + 60) * 10 / 11, deviceWidth * 3 / 4 + 30) / (float) 300;
+        int deviceHeight = displayMetrics.heightPixels;
+        int deviceWidth = displayMetrics.widthPixels;
+        int canvasHeight = deviceHeight * 4/5;
+        int canvasWidth = deviceWidth * 5/6;
+        Resizer.set(canvas, canvasHeight, canvasWidth);
 
-        adjustViewSize(numberBoard, scale);
-        for (int i = 0; i < order.length; i++) {
-            adjustViewSize(imageView[i], scale);
-        }
-        adjustViewSize(resetButton, scale);
-        adjustTextSize(textSteps, scale);
-        adjustTextSize(timerValue, scale);
-    }
+        float scale = Math.min(canvasHeight * 7 / 10, canvasWidth) / (300 * displayMetrics.density);
 
-    private void adjustTextSize(TextView textView, float scale) {
-        textView.setTextSize(COMPLEX_UNIT_PX, textView.getTextSize() * scale);
-    }
-
-
-    private void adjustViewSize(View view, float scale) {
-        ViewGroup.LayoutParams par = view.getLayoutParams();
-        par.width *= scale;
-        par.height *= scale;
-
-        view.setLayoutParams(par);
+        return new Resizer(scale);
     }
 
 
@@ -232,7 +223,8 @@ public class FragmentGame_v2 extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
                 LayoutInflater li = LayoutInflater.from(getActivity());
-                View alertTop5 = li.inflate(R.layout.alert_top5, null);
+                View alertTop5 = li.inflate(R.layout.alert_top5_v2, null);
+                resizer.adjustAll((ViewGroup) alertTop5);
                 builder.setView(alertTop5);
 
                 final TextView rankValue = (TextView) alertTop5.findViewById(R.id.rank);
@@ -282,7 +274,8 @@ public class FragmentGame_v2 extends Fragment {
                 ////////Pop out an alert dialog///////
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater li = LayoutInflater.from(getActivity());
-                View alertFinish = li.inflate(R.layout.alert_finish, null);
+                View alertFinish = li.inflate(R.layout.alert_finish_v2, null);
+                resizer.adjustAll((ViewGroup) alertFinish);
                 builder.setView(alertFinish);
 
                 final TextView stepsValue = (TextView) alertFinish.findViewById(R.id.steps);
