@@ -26,6 +26,7 @@ A fun android game to play, developed in Android Studio.
 - [x] alert_reset_ranking v2
 - [x] resize all elements in alert_reset_ranking layout when starting the fragment (based on the screen size)
 - [x] rank by time instead of steps
+- [ ] add mobile adds
 - [ ] display Personal Best in the game fragment
 - [ ] support 4*4
 - [ ] support 5*5

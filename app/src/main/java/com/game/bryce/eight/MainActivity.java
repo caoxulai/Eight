@@ -8,19 +8,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-
+import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends ActionBarActivity {
 
+    final String adModAppID = "ca-app-pub-4003093615668727~6369461608";
 
     public static MediaPlayer bgm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        // add MobileAds
+        MobileAds.initialize(this, adModAppID);
+
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
 
 
