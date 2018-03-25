@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
 
         FragmentMenu fmenu = new FragmentMenu();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.framelayout, fmenu, "menu");
+        transaction.add(R.id.fragmentPlaceholder, fmenu, "menu");
         transaction.commit();
 
 
