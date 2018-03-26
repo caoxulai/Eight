@@ -77,7 +77,7 @@ public class FragmentGame_v2 extends Fragment {
             int minutes = seconds / 60;
             seconds = seconds % 60;
             int milliseconds = (int) (timeInMilliseconds % 1000) / 10;
-            timerValue.setText(format("%d:%s.%s", minutes, format("%02d", seconds), format("%02d", milliseconds)));
+            timerValue.setText(format("%s:%s.%s", format("%02d", minutes), format("%02d", seconds), format("%02d", milliseconds)));
             customHandler.postDelayed(this, 0);
         }
     };

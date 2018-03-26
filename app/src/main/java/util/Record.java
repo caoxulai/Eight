@@ -21,7 +21,7 @@ public class Record {
         int minutes = seconds / 60;
         seconds = seconds % 60;
         int milliseconds = (int) (time % 100);
-        this.timeString = Integer.toString(minutes) + ":" + format("%02d", seconds) + "." + format("%02d", milliseconds);
+        this.timeString = format("%02d", minutes) + ":" + format("%02d", seconds) + "." + format("%02d", milliseconds);
     }
 
     public Record(String name, int steps, String timeString, long time) {
