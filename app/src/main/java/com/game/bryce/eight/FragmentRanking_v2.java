@@ -141,7 +141,7 @@ public class FragmentRanking_v2 extends Fragment {
                 fragmentManager.popBackStack();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 // The third input is alias of this new fragment
-                transaction.replace(R.id.framelayout, new FragmentGame_v2(), "game");
+                transaction.replace(R.id.fragmentPlaceholder, new FragmentGame_v2(), "game");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

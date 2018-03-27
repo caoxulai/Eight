@@ -341,7 +341,7 @@ public class FragmentGame extends Fragment {
                                 bundle.putInt("rank", rank);
                                 f_ranking.setArguments(bundle);
 
-                                transaction.replace(R.id.framelayout, f_ranking, "ranking");
+                                transaction.replace(R.id.fragmentPlaceholder, f_ranking, "ranking");
                                 transaction.addToBackStack(null);
                                 transaction.commit();
                             }

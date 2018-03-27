@@ -101,7 +101,7 @@
         android:layout_below="@+id/textSteps"
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical|center_horizontal"
-        android:text="@string/timerVal"
+        android:text="@string/timer_val"
         android:textSize="14sp" />
 
     <TextView
