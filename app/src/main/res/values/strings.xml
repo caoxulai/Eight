@@ -4,8 +4,7 @@
     <string name="timer_val">00:00:00</string>
     <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="banner_ad_unit_id">ca-app-pub-4003093615668727/4011735469</string>
-
-    <string name="personalBest">Best: 00:00.00</string>
+    <string name="local_best">Best: 00:00.00</string>
 
 
 </resources>
