@@ -51,7 +51,7 @@ public class FragmentGame_v2 extends Fragment {
             R.drawable.four, R.drawable.five, R.drawable.six,
             R.drawable.seven, R.drawable.eight, R.drawable.transparent};
 
-    private TextView textSteps;
+    //    private TextView textSteps;
     private ImageView resetButton;
 
     // declare a resizer
@@ -62,6 +62,7 @@ public class FragmentGame_v2 extends Fragment {
     private TextView timerValue;
     private long startTime = 0L;
     private Handler customHandler = new Handler();
+    private TextView localBest;
 
     // declare SharedPreferences as a database to store rankings
     public static final String MyPREFERENCES = "rankings";
@@ -97,8 +98,9 @@ public class FragmentGame_v2 extends Fragment {
         canvas = (ConstraintLayout) fragmentGame.findViewById(R.id.canvas);
 
         resetButton = (ImageView) fragmentGame.findViewById(R.id.reset);
-        textSteps = (TextView) fragmentGame.findViewById(R.id.textSteps);
+//        textSteps = (TextView) fragmentGame.findViewById(R.id.textSteps);
         timerValue = (TextView) fragmentGame.findViewById(R.id.timerValue);
+        localBest = (TextView) fragmentGame.findViewById(R.id.localBest);
 
         numberBoard = (ConstraintLayout) fragmentGame.findViewById(R.id.numberBoard);
         order = new int[9];
@@ -147,8 +149,8 @@ public class FragmentGame_v2 extends Fragment {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int deviceHeight = displayMetrics.heightPixels;
         int deviceWidth = displayMetrics.widthPixels;
-        int canvasHeight = deviceHeight * 4/5;
-        int canvasWidth = deviceWidth * 5/6;
+        int canvasHeight = deviceHeight * 4 / 5;
+        int canvasWidth = deviceWidth * 5 / 6;
         Resizer.set(canvas, canvasHeight, canvasWidth);
 
         float scale = Math.min(canvasHeight * 7 / 10, canvasWidth) / (300 * displayMetrics.density);
@@ -186,7 +188,7 @@ public class FragmentGame_v2 extends Fragment {
 
     private void stepAndUpdate(int i) {
         steps++;
-        textSteps.setText(format("Steps: %d", steps));
+//        textSteps.setText(format("Steps: %d", steps));
 
         // update current order information
         int vacancy = getVacancy();
@@ -299,7 +301,8 @@ public class FragmentGame_v2 extends Fragment {
     private void restart() {
         // reset steps
         steps = 0;
-        textSteps.setText(format("Steps: %d", steps));
+//        textSteps.setText(format("Steps: %d", steps));
+        localBest.setText("Best: " + ranking.getLocalBest());
 
         List<Integer> dataList = new ArrayList<>();
         for (int i = 0; i < order.length - 1; i++) {

@@ -88,6 +88,10 @@ public class Ranking {
         editor.apply();
     }
 
+    public String getLocalBest(){
+        return tops[0] != null ? tops[0].getTimeString(): "--:--.--";
+    }
+
     public String getLastName() {
         return lastName;
     }
