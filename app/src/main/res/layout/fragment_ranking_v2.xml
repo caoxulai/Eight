@@ -9,7 +9,7 @@
 
         android:id="@+id/canvas"
         android:layout_width="300dp"
-        android:layout_height="474dp"
+        android:layout_height="460dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -54,12 +54,12 @@
             android:layout_width="300dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/newGame"
-            app:layout_constraintDimensionRatio="H, 14:15"
+            app:layout_constraintDimensionRatio="H, 8:7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rankingTitle"
-            app:layout_constraintVertical_bias="0.6">
+            app:layout_constraintVertical_bias="0.5">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -433,7 +433,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/rankingTitle"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98" />
+            app:layout_constraintVertical_bias="0.95" />
 
     </android.support.constraint.ConstraintLayout>
 
