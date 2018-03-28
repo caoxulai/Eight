@@ -28,6 +28,7 @@ A fun android game to play, developed in Android Studio.
 - [x] rank by time instead of steps
 - [x] add mobile adds
 - [x] display Personal Best in the game fragment
+- [ ] Support sliding the number, not only tapping
 - [ ] keep the background fragment untouched when using keyboard
 - [ ] support 4*4
 - [ ] support 5*5
