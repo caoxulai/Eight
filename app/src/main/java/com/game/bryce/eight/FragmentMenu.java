@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import util.NumberImageView;
+import util.OnSwipeTouchListener;
 import util.Resizer;
 
 /**
@@ -36,19 +39,10 @@ public class FragmentMenu extends Fragment {
 
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
+                // The third input is alias of this new fragment
                 transaction.replace(R.id.fragmentPlaceholder, new FragmentGame_v2(), "game");
                 transaction.addToBackStack(null);
                 transaction.commit();
-
-
-//
-//                Fragment details = (Fragment)getFragmentManager().findFragmentById(R.id.fragment);
-//                details = new FragmentGame();
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.replace(R.id.fragment, details);
-//                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//                ft.commit();
-
             }
         });
 
