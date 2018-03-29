@@ -27,6 +27,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import util.NumberImageView;
+import util.OnSwipeTouchListener;
 import util.Ranking;
 import util.Record;
 import util.Resizer;
@@ -37,6 +39,8 @@ import static java.lang.String.format;
  * A placeholder fragment containing a simple view.
  */
 public class FragmentGame_v2 extends Fragment {
+    private int boardSize = 3;
+
     // for saving method cuz alert dialog cannot pass value out
     private int steps = 0;
 
@@ -46,7 +50,7 @@ public class FragmentGame_v2 extends Fragment {
     // declare all the components
     private ConstraintLayout canvas;
     private ConstraintLayout numberBoard;
-    private ImageView[] imageView;
+    private NumberImageView[] numberImageViews;
     private int[] images = {R.drawable.one, R.drawable.two, R.drawable.three,
             R.drawable.four, R.drawable.five, R.drawable.six,
             R.drawable.seven, R.drawable.eight, R.drawable.transparent};
@@ -104,35 +108,71 @@ public class FragmentGame_v2 extends Fragment {
 
         numberBoard = (ConstraintLayout) fragmentGame.findViewById(R.id.numberBoard);
         order = new int[9];
-        imageView = new ImageView[9];
-        imageView[0] = (ImageView) fragmentGame.findViewById(R.id.image1);
-        imageView[1] = (ImageView) fragmentGame.findViewById(R.id.image2);
-        imageView[2] = (ImageView) fragmentGame.findViewById(R.id.image3);
-        imageView[3] = (ImageView) fragmentGame.findViewById(R.id.image4);
-        imageView[4] = (ImageView) fragmentGame.findViewById(R.id.image5);
-        imageView[5] = (ImageView) fragmentGame.findViewById(R.id.image6);
-        imageView[6] = (ImageView) fragmentGame.findViewById(R.id.image7);
-        imageView[7] = (ImageView) fragmentGame.findViewById(R.id.image8);
-        imageView[8] = (ImageView) fragmentGame.findViewById(R.id.vacancy);
+        numberImageViews = new NumberImageView[9];
+        numberImageViews[0] = (NumberImageView) fragmentGame.findViewById(R.id.image1);
+        numberImageViews[1] = (NumberImageView) fragmentGame.findViewById(R.id.image2);
+        numberImageViews[2] = (NumberImageView) fragmentGame.findViewById(R.id.image3);
+        numberImageViews[3] = (NumberImageView) fragmentGame.findViewById(R.id.image4);
+        numberImageViews[4] = (NumberImageView) fragmentGame.findViewById(R.id.image5);
+        numberImageViews[5] = (NumberImageView) fragmentGame.findViewById(R.id.image6);
+        numberImageViews[6] = (NumberImageView) fragmentGame.findViewById(R.id.image7);
+        numberImageViews[7] = (NumberImageView) fragmentGame.findViewById(R.id.image8);
+        numberImageViews[8] = (NumberImageView) fragmentGame.findViewById(R.id.vacancy);
 
         resizer = initializeResizer();
         resizer.adjustAll(canvas);
 
         for (int i = 0; i < order.length; i++) {
-
-
             final int finalI = i;
-            imageView[finalI].setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+            numberImageViews[finalI].setOnTouchListener(new OnSwipeTouchListener(getActivity().getApplicationContext()) {
+                public void onTapUp() {
                     if (changeable(finalI)) {
                         int vacancy = getVacancy();
-                        imageView[vacancy].setImageResource(images[order[finalI]]);
-                        imageView[finalI].setImageResource(images[order.length - 1]);
+                        numberImageViews[vacancy].setImageResource(images[order[finalI]]);
+                        numberImageViews[finalI].setImageResource(images[order.length - 1]);
                         stepAndUpdate(finalI);
                     }
                 }
+                public void onSwipeTop() {
+                    int next = finalI - boardSize;
+                    if(next == getVacancy()){
+                        int vacancy = getVacancy();
+                        numberImageViews[vacancy].setImageResource(images[order[finalI]]);
+                        numberImageViews[finalI].setImageResource(images[order.length - 1]);
+                        stepAndUpdate(finalI);
+                    }
+                }
+                public void onSwipeRight() {
+                    int next = finalI + 1;
+                    if(next%boardSize != 0 && next == getVacancy()){
+                        int vacancy = getVacancy();
+                        numberImageViews[vacancy].setImageResource(images[order[finalI]]);
+                        numberImageViews[finalI].setImageResource(images[order.length - 1]);
+                        stepAndUpdate(finalI);
+                    }
+                }
+                public void onSwipeLeft() {
+                    int next = finalI - 1;
+                    if(next%boardSize != boardSize-1 && next == getVacancy()){
+                        int vacancy = getVacancy();
+                        numberImageViews[vacancy].setImageResource(images[order[finalI]]);
+                        numberImageViews[finalI].setImageResource(images[order.length - 1]);
+                        stepAndUpdate(finalI);
+                    }
+                }
+                public void onSwipeBottom() {
+                    int next = finalI + boardSize;
+                    if(next == getVacancy()){
+                        int vacancy = getVacancy();
+                        numberImageViews[vacancy].setImageResource(images[order[finalI]]);
+                        numberImageViews[finalI].setImageResource(images[order.length - 1]);
+                        stepAndUpdate(finalI);
+                    }
+                }
+
             });
         }
+
 
         resetButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -203,7 +243,7 @@ public class FragmentGame_v2 extends Fragment {
             successSound.start();
 
             for (int k = 0; k < order.length; k++) {
-                imageView[k].setClickable(false);
+                numberImageViews[k].setClickable(false);
             }
 
             Vibrator v = (Vibrator) getActivity().getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
@@ -320,8 +360,8 @@ public class FragmentGame_v2 extends Fragment {
         order[order.length - 1] = order.length - 1;
 
         for (int i = 0; i < order.length; i++) {
-            imageView[i].setImageResource(images[order[i]]);
-            imageView[i].setClickable(true);
+            numberImageViews[i].setImageResource(images[order[i]]);
+            numberImageViews[i].setClickable(true);
         }
 
         // start timer
