@@ -35,9 +35,9 @@ public class OnSwipeTouchListener implements OnTouchListener {
         }
 
         @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
+        public boolean onSingleTapUp(MotionEvent e) {
             onTapUp();
-            return super.onSingleTapConfirmed(e);
+            return super.onSingleTapUp(e);
         }
 
         @Override
