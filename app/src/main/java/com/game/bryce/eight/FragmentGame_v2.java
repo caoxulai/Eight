@@ -14,6 +14,7 @@ import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.constraint.ConstraintLayout;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -307,7 +308,11 @@ public class FragmentGame_v2 extends Fragment {
                         name = name.replaceAll("\\s+", " ");
 
                         if (name.matches("")) {
-                            Toast.makeText(getActivity().getApplicationContext(), "You did not enter a username", Toast.LENGTH_SHORT).show();
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "You did not enter a username", Toast.LENGTH_SHORT);
+                            int y = nameValue.getBottom() + nameValue.getHeight()/2;
+                            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP, 0, y);
+                            toast.show();
+
                         } else {
                             // add record in ranking
                             currRecord.setName(name);
