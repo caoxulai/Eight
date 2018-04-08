@@ -14,6 +14,7 @@ import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.constraint.ConstraintLayout;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,36 +134,40 @@ public class FragmentGame_v2 extends Fragment {
                         stepAndUpdate(finalI);
                     }
                 }
+
                 public void onSwipeTop() {
                     int next = finalI - boardSize;
-                    if(next == getVacancy()){
+                    if (next == getVacancy()) {
                         int vacancy = getVacancy();
                         numberImageViews[vacancy].setImageResource(images[order[finalI]]);
                         numberImageViews[finalI].setImageResource(images[order.length - 1]);
                         stepAndUpdate(finalI);
                     }
                 }
+
                 public void onSwipeRight() {
                     int next = finalI + 1;
-                    if(next%boardSize != 0 && next == getVacancy()){
+                    if (next % boardSize != 0 && next == getVacancy()) {
                         int vacancy = getVacancy();
                         numberImageViews[vacancy].setImageResource(images[order[finalI]]);
                         numberImageViews[finalI].setImageResource(images[order.length - 1]);
                         stepAndUpdate(finalI);
                     }
                 }
+
                 public void onSwipeLeft() {
                     int next = finalI - 1;
-                    if(next%boardSize != boardSize-1 && next == getVacancy()){
+                    if (next % boardSize != boardSize - 1 && next == getVacancy()) {
                         int vacancy = getVacancy();
                         numberImageViews[vacancy].setImageResource(images[order[finalI]]);
                         numberImageViews[finalI].setImageResource(images[order.length - 1]);
                         stepAndUpdate(finalI);
                     }
                 }
+
                 public void onSwipeBottom() {
                     int next = finalI + boardSize;
-                    if(next == getVacancy()){
+                    if (next == getVacancy()) {
                         int vacancy = getVacancy();
                         numberImageViews[vacancy].setImageResource(images[order[finalI]]);
                         numberImageViews[finalI].setImageResource(images[order.length - 1]);
@@ -282,35 +287,54 @@ public class FragmentGame_v2 extends Fragment {
 
                 builder.setCancelable(false).setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // Code for the button of alert dialog
-
-                                String name = nameValue.getText().toString();
-                                // trim beginning and tailing whitespaces
-                                name = name.trim();
-                                // trim duplicated whitespaces
-                                name = name.replaceAll("\\s+", " ");
-                                // add record in ranking
-                                currRecord.setName(name);
-                                ranking.addRecord(currRecord);
-
-                                FragmentManager fragmentManager = getFragmentManager();
-                                // Go to Menu fragment, but it will be instantly replaced by Ranking fragment, so it won't show up. and then it will go back to Menu when you finished in ranking
-                                fragmentManager.popBackStack();
-                                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                                // The third input is alias of this new fragment
-                                FragmentRanking_v2 fragmentRanking = new FragmentRanking_v2();
-                                Bundle bundle = new Bundle();
-                                bundle.putInt("rank", rank);
-                                fragmentRanking.setArguments(bundle);
-
-                                transaction.replace(R.id.fragmentPlaceholder, fragmentRanking, "ranking");
-                                transaction.addToBackStack(null);
-                                transaction.commit();
+                                //Do nothing here because we override this button later to change the close behaviour.
+                                //However, we still need this because on older versions of Android unless we
+                                //pass a handler the button doesn't get instantiated
                             }
                         }).create();
-                AlertDialog alertDialog = builder.create();
+                final AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+                //Overriding the handler immediately after show is probably a better approach than OnShowListener as described below
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Code for the button of alert dialog
+
+                        // trim beginning and tailing whitespaces
+                        String name = nameValue.getText().toString().trim();
+                        // trim duplicated whitespaces
+                        name = name.replaceAll("\\s+", " ");
+
+                        if (name.matches("")) {
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "You did not enter a username", Toast.LENGTH_SHORT);
+                            int y = nameValue.getBottom() + nameValue.getHeight()/2;
+                            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP, 0, y);
+                            toast.show();
+
+                        } else {
+                            // add record in ranking
+                            currRecord.setName(name);
+                            ranking.addRecord(currRecord);
+
+                            FragmentManager fragmentManager = getFragmentManager();
+                            // Go to Menu fragment, but it will be instantly replaced by Ranking fragment, so it won't show up. and then it will go back to Menu when you finished in ranking
+                            fragmentManager.popBackStack();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            // The third input is alias of this new fragment
+                            FragmentRanking_v2 fragmentRanking = new FragmentRanking_v2();
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("rank", rank);
+                            fragmentRanking.setArguments(bundle);
+
+                            transaction.replace(R.id.fragmentPlaceholder, fragmentRanking, "ranking");
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
 
             } else {
                 ////////Pop out an alert dialog///////
